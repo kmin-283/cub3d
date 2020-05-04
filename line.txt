@@ -1,0 +1,5 @@
+gcc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -lXext -lX11 -no-pie
+
+gcc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -lXext -lX11 -no-pie -L ./libft -lft -lm
+
+man ./minilibx_linux/man/man3/mlx.3
