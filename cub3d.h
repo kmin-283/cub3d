@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/04 17:30:15 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/04 20:53:08 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ int render(t_player *p);
 int ver(t_player *p);
 int hor(t_player *p);
 int	free_img(t_player *p);
+
+int reset_variables(t_player *p);
 /*
 **  ray.c
 */

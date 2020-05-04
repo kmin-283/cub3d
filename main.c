@@ -34,7 +34,7 @@ double normalizeAngle(double angle)
 {
 	angle = fmod(angle, (2 * M_PI));
 	if (angle < 0)
-		angle = -(2 * M_PI) * angle;
+		angle = (2 * M_PI) + angle;
 	return (angle);
 }
 
@@ -140,28 +140,33 @@ int dis(t_player *p)
 
 int render_3d_ProjectionWall(t_player *p)
 {
-	int wallStripHeight;
+	double wallStripHeight;
 	double rayDistance;
-	int distanceProjectionPlane;
+	double distanceProjectionPlane;
 	int i;
-	int j;
 	int start;
 
 	i = 0;
 	rayDistance = p->dis.final_dis;
-	distanceProjectionPlane = (SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2);
+	distanceProjectionPlane = (SCREEN_WIDTH / 2) / tan((double)FOV_ANGLE / 2);
 	wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
-	start = (SCREEN_HEIGHT / 2) - (wallStripHeight / 2);
-	while (i < NUM_RAYS)
+	start = (SCREEN_HEIGHT - wallStripHeight) / 2;
+	if (start < 0)
 	{
-		j = 0;
-		while (j < wallStripHeight)
-		{
-			p->img_addr[i + j * start * SCREEN_WIDTH] = 0xFFFFFF;
-			j++;
-		}
+		printf("%d\n",start);
+		start = 0;
+	}
+	while (i < wallStripHeight)
+	{
+		p->img_addr[p->ray.id + (start + i) * SCREEN_WIDTH] = 0xcdc9c9;
 		i++;
 	}
+}
+
+int reset_variables(t_player *p)
+{
+	p->hor.foundWallHit = FALSE;
+	p->ver.foundWallHit = FALSE;
 }
 
 int render(t_player *p)
@@ -173,7 +178,7 @@ int render(t_player *p)
 
 	p->img1 = mlx_new_image(p->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	p->img_addr = (unsigned int *)mlx_get_data_addr(p->img1, &bpp1, &sl1, &endian1);
-	p->ray.angle = p->unit.rotationAngle - (FOV_ANGLE / 2);
+	p->ray.angle = p->unit.rotationAngle - ((double)FOV_ANGLE / 2);
 	in_WhileLoop = FALSE;
 	while (p->ray.id < SCREEN_WIDTH)
 	{
@@ -182,6 +187,7 @@ int render(t_player *p)
 		ver(p);
 		dis(p);
 		render_3d_ProjectionWall(p);
+		reset_variables(p);
 		p->ray.id++;
 	}
 	p->ray.id = 0;
@@ -192,6 +198,7 @@ int draw(t_player *p)
 {
 	render(p);
 	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
+	free(p->img1);
 	return (0);
 }
 

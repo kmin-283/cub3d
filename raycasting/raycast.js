@@ -142,7 +142,6 @@ class Ray {
 
         if (this.isRayFacingUp)
             nextHorzTouchY--;
-
         // Increment xstep and ystep until we find a wall
         while (nextHorzTouchX >= 0 && nextHorzTouchX <= WINDOW_WIDTH && nextHorzTouchY >= 0 && nextHorzTouchY <= WINDOW_HEIGHT) {
             if (grid.hasWallAt(nextHorzTouchX, nextHorzTouchY)) {
@@ -272,7 +271,6 @@ function castAllRays() {
         ray.cast(columnId);
         rays.push(ray);
         rayAngle += FOV_ANGLE / NUM_RAYS;
-        console.log(ray.distance);
         columnId++;
     }
 }
@@ -289,12 +287,13 @@ function render3DProjectedWalls() {
 
         // projected wall height
         var wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
-
+        var start = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
+        console.log(start);
         fill("rgba(255, 255, 255, 1.0)");
         noStroke();
         rect(
            i * WALL_STRIP_WIDTH,
-           (WINDOW_HEIGHT / 2) - (wallStripHeight / 2),
+           start,
            WALL_STRIP_WIDTH,
            wallStripHeight
         );
@@ -310,7 +309,7 @@ function normalizeAngle(angle) {
 }
 
 function distanceBetweenPoints(x1, y1, x2, y2) {
-    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    return Math.hypot((x2 - x1), (y2 - y1));
 }
 
 function setup() {
