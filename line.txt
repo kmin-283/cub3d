@@ -1,5 +1,5 @@
 gcc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -lXext -lX11 -no-pie
 
-gcc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -lXext -lX11 -no-pie -L ./libft -lft -lm
+gcc -fsanitize=address main.c keys.c check.c map.c error.c utils.c mapgrid.c unit.c -lmlx -lXext -lX11 -no-pie -L ./gnl -lftgnl -lm
 
 man ./minilibx_linux/man/man3/mlx.3

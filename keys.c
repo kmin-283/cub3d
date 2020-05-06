@@ -6,11 +6,20 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 20:23:02 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/04 22:34:59 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/06 15:13:52 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_close(int key, t_player *p)
+{
+	free(p->map.map);
+	mlx_destroy_window(p->mlx_ptr, p->win_ptr);
+	free(p->mlx_ptr);
+	exit(0);
+	return (0);
+}
 
 int key_press(int key, t_player *p)
 {
@@ -74,6 +83,5 @@ int key_release(int key, t_player *p)
 	{
 		p->unit.turnDirection = 0;
 	}
-    free_img(p);
 	return (0);
 }
