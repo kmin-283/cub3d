@@ -58,12 +58,12 @@ class Map {
 class Player {
     constructor() {
         this.x = WINDOW_WIDTH / 2;
-        this.y = WINDOW_HEIGHT / 7;
+        this.y = TILE_SIZE * 7;
 
         this.radius = 4;
         this.turnDirection = 0; // -1 if left, +1 if right
         this.walkDirection = 0; // -1 if back, +1 if front
-        this.rotationAngle = Math.PI / 2;
+        this.rotationAngle = 2 * Math.PI; //default = Math.PI / 2
         this.moveSpeed = 4.0;
         this.rotationSpeed = 3 * (Math.PI / 180);
     }
@@ -129,7 +129,7 @@ class Ray {
 
         // Find the x-coordinate of the closest horizontal grid intersection
         xintercept = player.x + (yintercept - player.y) / Math.tan(this.rayAngle);
-
+        console.log(yintercept, xintercept);
         // Calculate the increment xstep and ystep
         ystep = TILE_SIZE;
         ystep *= this.isRayFacingUp ? -1 : 1;
@@ -204,7 +204,7 @@ class Ray {
         var vertHitDistance = (foundVertWallHit)
             ? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
             : Number.MAX_VALUE;
-            console.log(horzHitDistance, vertHitDistance);
+
         // only store the smallest of the distances
         this.wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
         this.wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;

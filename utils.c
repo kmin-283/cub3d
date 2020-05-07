@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 13:32:31 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 20:52:26 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int setPosition(t_player *p, char c)
     else if (c == 'S')
         p->unit.rotationAngle = M_PI / 2;
     else if (c == 'E')
-        p->unit.rotationAngle = M_PI;
+        p->unit.rotationAngle = 2 * M_PI;
     else if (c == 'W')
-        p->unit.rotationAngle = 0;
+        p->unit.rotationAngle = M_PI;
     else
         return (0);
     p->unit.y = p->map.height;
