@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 18:48:32 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 13:32:31 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int isWhitespace(char c)
 int setPosition(t_player *p, char c)
 {
     if (c == 'N')
-        p->unit.rotationAngle = M_PI / 2;
-    else if (c == 'S')
         p->unit.rotationAngle = (3 * M_PI) / 2;
+    else if (c == 'S')
+        p->unit.rotationAngle = M_PI / 2;
     else if (c == 'E')
         p->unit.rotationAngle = M_PI;
     else if (c == 'W')

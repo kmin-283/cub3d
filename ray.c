@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 19:31:30 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 19:17:20 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 17:11:33 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ray_facing_dir(t_player *p)
 int ray(t_player *p, int *in_while_loop)
 {
 	if (*in_while_loop == TRUE)
-		p->ray.angle += (double)FOV_ANGLE / NUM_RAYS;
+		p->ray.angle += (double)FOV_ANGLE / p->scr.width;
 	else
 		*in_while_loop = TRUE;
 	p->ray.angle = normalizeAngle(p->ray.angle);
@@ -44,10 +44,10 @@ int hor(t_player *p)
 	p->hor.nexttouchY = p->hor.y_intercept;
 	if (p->ray.FacingUp)
 		p->hor.nexttouchY--;
-	while (p->hor.nexttouchX >= 0 && p->hor.nexttouchX <= SCREEN_WIDTH &&
-	p->hor.nexttouchY >=0 && p->hor.nexttouchY <= SCREEN_HEIGHT)
+	while (p->hor.nexttouchX >= 0 && p->hor.nexttouchY >=0 && p->hor.nexttouchY <= p->scr.height\
+	&& p->hor.nexttouchX <= p->scr.width)
 	{
-		if (hasWallAt(p->hor.nexttouchX, p->hor.nexttouchY))
+		if (hasWallAt(p, p->hor.nexttouchX, p->hor.nexttouchY))
 		{
 			p->hor.foundWallHit = TRUE;
 			p->hor.wallHitX = p->hor.nexttouchX;
@@ -76,10 +76,10 @@ int ver(t_player *p)
 	p->ver.nexttouchY = p->ver.y_intercept;
 	if (p->ray.FacingLeft)
 		p->ver.nexttouchX--;
-	while (p->ver.nexttouchX >= 0 && p->ver.nexttouchX <= SCREEN_WIDTH &&
-	p->ver.nexttouchY >=0 && p->ver.nexttouchY <= SCREEN_HEIGHT)
+	while (p->ver.nexttouchX >= 0 && p->ver.nexttouchY >=0 && p->ver.nexttouchY <= p->scr.height\
+	&& p->ver.nexttouchX <= p->scr.width)
 	{
-		if (hasWallAt(p->ver.nexttouchX, p->ver.nexttouchY))
+		if (hasWallAt(p, p->ver.nexttouchX, p->ver.nexttouchY))
 		{
 			p->ver.foundWallHit = TRUE;
 			p->ver.wallHitX = p->ver.nexttouchX;

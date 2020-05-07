@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 19:10:13 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 17:17:05 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int screenRange(t_player *p, char *line)
         line++;
     while (isWhitespace(*line))
         line++;
-    if (p->scr.width > 1000)//해상도에 맞게 바꿔줄 것//
-        p->scr.width = 1000;
-    if (p->scr.height > 1000)
-        p->scr.height = 1000;
+    if (p->scr.width > 800)//1920*1080에 맞게 바꿔줄 것//
+        p->scr.width = 800;
+    if (p->scr.height > 800)
+        p->scr.height = 800;
     if (p->scr.width <= 0 || p->scr.height <= 0 || *line != '\0')
 		return (error(R_ERROR));
     return (0);
@@ -128,10 +128,12 @@ int init_map(t_player *p, char *argv1)
         val = parsing_cubfile(p, line);
         free(line);
     }
+    val = parsing_cubfile(p, line);
     free(line);
     close(fd);
     if (val == -1)
         ft_close(1, p);
     init_unit(p);
+    setMapWidth(p);
     return (0);
 }

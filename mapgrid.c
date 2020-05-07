@@ -6,11 +6,34 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 17:55:11 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 14:25:52 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int setMapWidth(t_player *p)
+{
+    int **width;
+    int i;
+
+    i = 0;
+    if (!(width = (int **)ft_calloc(p->map.height, sizeof(int *))))
+        return (error(WIDTH_ALLOCATION_ERROR));
+    while (i < p->map.height)
+    {
+        if (!(width[i] = (int *)ft_calloc(2, sizeof(int))))
+        {
+            free(width);
+            return (error(WIDTH_ALLOCATION_ERROR));
+        }
+        width[i][0] = i;
+        width[i][1] = ft_strlen(p->map.map[i]);
+        i++;
+    }
+    p->map.width = width;
+    return (0);
+}
 
 int    oneLine_len(t_player *p, char *line)
 {

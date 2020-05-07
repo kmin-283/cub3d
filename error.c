@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:32:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 17:29:05 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 14:12:58 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int error(int error)
     error == 9 ? write(1, "Error : Map is Open\nMap must be Closed\n",40) : 0;
     error == 10 ? write(1, "Error : Invalid character in Map\n",34) : 0;
     error == 11 ? write(1, "Error : Allocation fails in mapGrid function\n",44) : 0;
+    error == 11 ? write(1, "Error : Allocation fails in setMapWidth function\n",50) : 0;
     return (-1);
 }

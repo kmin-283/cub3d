@@ -59,6 +59,7 @@ class Player {
     constructor() {
         this.x = WINDOW_WIDTH / 2;
         this.y = WINDOW_HEIGHT / 7;
+
         this.radius = 4;
         this.turnDirection = 0; // -1 if left, +1 if right
         this.walkDirection = 0; // -1 if back, +1 if front
@@ -203,7 +204,7 @@ class Ray {
         var vertHitDistance = (foundVertWallHit)
             ? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
             : Number.MAX_VALUE;
-
+            console.log(horzHitDistance, vertHitDistance);
         // only store the smallest of the distances
         this.wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
         this.wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
@@ -288,7 +289,6 @@ function render3DProjectedWalls() {
         // projected wall height
         var wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
         var start = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
-        console.log(start);
         fill("rgba(255, 255, 255, 1.0)");
         noStroke();
         rect(

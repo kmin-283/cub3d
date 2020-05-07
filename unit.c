@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 19:14:54 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 18:29:19 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int setUnitPos(t_player *p)
     {
         if (p->map.map[p->unit.y][i] == 'W' || p->map.map[p->unit.y][i] == 'E' ||
         p->map.map[p->unit.y][i] == 'N' || p->map.map[p->unit.y][i] == 'S')
-            p->unit.x = i;
+            p->unit.x = (i * TILE_SIZE) + TILE_SIZE / 2;
         i++;
     }
+    p->unit.y = (p->unit.y * TILE_SIZE) + TILE_SIZE / 2;
+    return (0);
 }
 
 int	init_unit(t_player *p)
 {
     setUnitPos(p);
-    p->unit.x = SCREEN_WIDTH / 2;
-    p->unit.y = SCREEN_HEIGHT / 7;
 	p->unit.radius = 4;
 	p->unit.turnDirection = 0;
 	p->unit.walkDirection = 0;

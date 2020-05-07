@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 19:21:18 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/07 19:13:55 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 
 #define TILE_SIZE 64
 
-#define MAP_WIDTH 15
-#define MAP_HEIGHT 11
-
 #define TRUE 1
 #define FALSE 0
 #define KEYPRESSMASK 1
@@ -34,17 +31,19 @@
 #define KEYPRESS 2
 #define KEYRELEASE 3
 #define KEYCLOSE 17
-#define KEY_UP 119
-#define KEY_DOWN 115
-#define KEY_LEFT 97
-#define KEY_RIGHT 100
-#define SCREEN_WIDTH (MAP_WIDTH * TILE_SIZE)
-#define SCREEN_HEIGHT (MAP_HEIGHT * TILE_SIZE)
-
+/*
+**  keys
+*/
+# define KEY_UP 119
+# define KEY_DOWN 115
+# define KEY_LEFT 97
+# define KEY_RIGHT 100
+# define KEY_ESC 65307
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
 #define MINIMAP_SCALE_FACTOR 0.2
 
 #define FOV_ANGLE (66 * (M_PI / 180))
-#define NUM_RAYS SCREEN_WIDTH
 
 /*
 **  ERROR
@@ -60,6 +59,7 @@
 # define MAP_OPEN_ERROR 9
 # define CHAR_IN_MAP_ERROR 10
 # define MAP_ALLOCATION_ERROR 11
+# define WIDTH_ALLOCATION_ERROR 12
 /*
 **  struct
 */
@@ -132,7 +132,7 @@ typedef struct  s_screen
 typedef struct  s_map
 {
     char **map;
-    int width;
+    int **width;
     int height;
 }               t_map;
 
@@ -169,6 +169,12 @@ int key_press(int key, t_player *p);
 int key_release(int key, t_player *p);
 int	ft_close(int key, t_player *p);
 /*
+**  move.c
+*/
+int	moveBackandForth(int key, t_player *p);
+int	moveLeftandRight(int key, t_player *p);
+int	rotate(int key, t_player *p);
+/*
 **  main.c
 */
 void init(char *argv1, int hasSavefile);
@@ -177,10 +183,7 @@ void init(char *argv1, int hasSavefile);
 */
 int draw(t_player *p);
 int render(t_player *p);
-int ver(t_player *p);
-int hor(t_player *p);
-int	free_img(t_player *p);
-
+int render_3d_ProjectionWall(t_player *p);
 int reset_variables(t_player *p);
 /*
 **  ray.c
@@ -194,7 +197,7 @@ int ray_facing_dir(t_player *p);
 **  cub3d.c
 */
 double normalizeAngle(double angle);
-int hasWallAt(int x, int y);
+int hasWallAt(t_player *p, int x, int y);
 double distanceBetweenPoint(int x1, int y1, int x2, int y2);
 /*
 **  map.c
@@ -202,13 +205,13 @@ double distanceBetweenPoint(int x1, int y1, int x2, int y2);
 int init_map(t_player *p, char *argv1);
 int parsing_cubfile(t_player *p, char *line);
 int screenRange(t_player *p, char *line);
-int hasWallAt(int x, int y);
 /*
 **  mapgrid.c
 */
 int mapGrid(t_player *p, char *line);
 char    *mapCopy1(t_player *p, char *line);
 int    oneLine_len(t_player *p, char *line);
+int setMapWidth(t_player *p);
 /*
 **  check.c
 */

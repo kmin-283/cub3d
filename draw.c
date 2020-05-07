@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/06 19:17:44 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/06 23:42:27 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int render_3d_ProjectionWall(t_player *p)
 
 	i = 0;
 	rayDistance = p->dis.final_dis;
-	distanceProjectionPlane = (SCREEN_WIDTH / 2) / tan((double)FOV_ANGLE / 2);
+	distanceProjectionPlane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
 	wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
-	start = (SCREEN_HEIGHT - wallStripHeight) / 2;
+	start = (p->scr.height - wallStripHeight) / 2;
 	if (start < 0)
 		start = 0;
-	while (i < wallStripHeight && p->ray.id + (start + i) * SCREEN_WIDTH <= SCREEN_HEIGHT * SCREEN_WIDTH)
+	while (i < wallStripHeight && p->ray.id + (start + i) * p->scr.width <= p->scr.height * p->scr.width)
 	{
-		p->img_addr[p->ray.id + (start + i) * SCREEN_WIDTH] = 0xcdc9c9;
+		p->img_addr[p->ray.id + (start + i) * p->scr.width] = 0xcdc9c9;
 		i++;
 	}
 }
@@ -47,11 +47,11 @@ int render(t_player *p)
 	int endian1;
 	int	in_WhileLoop;
 
-	p->img1 = mlx_new_image(p->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	p->img1 = mlx_new_image(p->mlx_ptr, p->scr.width, p->scr.height);
 	p->img_addr = (unsigned int *)mlx_get_data_addr(p->img1, &bpp1, &sl1, &endian1);
 	p->ray.angle = p->unit.rotationAngle - ((double)FOV_ANGLE / 2);
 	in_WhileLoop = FALSE;
-	while (p->ray.id < SCREEN_WIDTH)
+	while (p->ray.id < p->scr.width)
 	{
 		ray(p, &in_WhileLoop);
 		hor(p);
