@@ -6,26 +6,30 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 22:28:07 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/12 00:36:26 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-unsigned int fillTexture(t_player * p, double scale)
+unsigned int fillTexture(t_player * p, double scale, double t_start)
 {
 	int color;
 	int index;
+	int start;
 
+	t_start *= scale;
+	if (p->tex.y_cor + t_start < 0)
+		t_start = p->tex.y_cor;
 	if (p->ray.side)
 	{
-		index = fmod(p->dis.final_wallHitY, 64) + floor(p->tex.y_cor) * 64;
+		index = fmod(p->dis.final_wallHitY, 64) + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.FacingRight ? p->tex.ea[index] : p->tex.we[index];
 		color = (color >> 1) & 8355711;
 	}
 	else
 	{
-		index = fmod(p->dis.final_wallHitX, 64) + floor(p->tex.y_cor) * 64;
+		index = fmod(p->dis.final_wallHitX, 64) + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.FacingDown ? p->tex.so[index] : p->tex.no[index];
 	}
 	p->tex.y_cor += scale;
@@ -41,6 +45,7 @@ int render_3d_ProjectionWall(t_player *p)
 	int start;
 	unsigned int color;
 	int index;
+	double texture_start;
 
 	i = 0;
 	rayDistance = p->dis.final_dis * (cos(p->ray.angle - p->unit.rotationAngle));
@@ -49,6 +54,7 @@ int render_3d_ProjectionWall(t_player *p)
 	start = (p->scr.height - wallStripHeight) / 2;
 	if (start < 0)
 		start = 0;
+	texture_start = start - p->scr.height / 2 + wallStripHeight / 2;
 	while (i <= p->scr.height)
 	{
 		if (i < start)
@@ -56,7 +62,7 @@ int render_3d_ProjectionWall(t_player *p)
 		else if (i > start + wallStripHeight)
 			color = p->tex.f;
 		else
-			color = fillTexture(p, 64 / wallStripHeight);
+			color = fillTexture(p, 64 / wallStripHeight, texture_start);
 		p->img_addr[p->ray.id + i * p->scr.width] = color;
 		i++;
 	}

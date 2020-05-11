@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 21:06:00 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 22:55:14 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ int draw(t_player *p, int has_save_file);
 int render(t_player *p);
 int render_3d_ProjectionWall(t_player *p);
 int reset_variables(t_player *p);
-unsigned int fillTexture(t_player *p, double wallstripheight);
+unsigned int fillTexture(t_player *p, double wallstripheight, double start);
 /*
 **  ray.c
 */
