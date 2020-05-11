@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/08 20:26:16 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 16:59:35 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,38 @@
 
 int	free_img(t_player *p)
 {
+	int i;
 
+	i = p->map.height;
+	while (i--)
+		free(p->map.map[i]);
+	free(p->map.map);
+	mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
+	mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
+	mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
+	mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
+	mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
+	free(p->mlx_ptr);
+	while (p->map.height--)
+		free(p->map.width[p->map.height]);
+	free(p->map.width);
+	exit(0);
+	return (0);
 }
 
-void init(char *argv1, int hasSavefile)
+int init(char *argv1, int hasSavefile)
 {
 	t_player p;
 
 	ft_memset(&p, 0, sizeof(p));
 	p.mlx_ptr = mlx_init();
-	init_map(&p, argv1);
+	if (init_map(&p, argv1) == -1)
+	{
+		free_img(&p);
+		return (0);
+	}
 	p.win_ptr = mlx_new_window(p.mlx_ptr, p.scr.width, p.scr.height, "cub3d");
-/* 	if (hasSavefile)
-		init_bitmap(&p); */
-	draw(&p);
+	draw(&p, hasSavefile);
  	mlx_hook(p.win_ptr, KEYPRESS, KEYPRESSMASK, key_press, &p);
 	mlx_hook(p.win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, &p);
 	mlx_loop(p.mlx_ptr);

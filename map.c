@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/08 22:33:12 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 20:10:51 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int parsing_cubfile(t_player *p, char *line)
     int ret;
 
     i = 0;
-    ret = 0;
     while (isWhitespace(line[i]))
         i++;
     if (line[i] == 'R' && line[i + 1] == ' ')
@@ -118,7 +117,6 @@ int init_map(t_player *p, char *argv1)
     int fd;
     char *line;
 
-    val = 0;
     if ((fd = open(argv1, O_RDONLY)) == -1)
         error(OPEN_ERROR);
     while ((ret = get_next_line(fd, &line)) > 0 && val != -1)
@@ -126,12 +124,12 @@ int init_map(t_player *p, char *argv1)
         val = parsing_cubfile(p, line);
         free(line);
     }
-    val = parsing_cubfile(p, line);
+    if (val == 0)
+        val = parsing_cubfile(p, line);
     free(line);
     close(fd);
-    if (val == -1)
-        ft_close(1, p);
     init_unit(p);
-    setMapWidth(p);
-    return (0);
+    if (val != -1)
+        val = setMapWidth(p);
+    return (val);
 }

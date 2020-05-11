@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 15:02:47 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 21:06:00 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include "mlx.h"
 
 #define TILE_SIZE 64//TILE_SIZE는 해상도에 맞춰서 바뀔 수 있도록 수정하기!!!!!//
@@ -60,6 +61,8 @@
 # define CHAR_IN_MAP_ERROR 10
 # define MAP_ALLOCATION_ERROR 11
 # define WIDTH_ALLOCATION_ERROR 12
+# define BITMAP_OPEN_ERROR 13
+# define SPRITE_ALLOCATION_ERROR 14
 /*
 **  struct
 */
@@ -151,9 +154,15 @@ typedef struct  s_texture
     unsigned int *sp;
     unsigned int c;
     unsigned int f;
-    unsigned int count;
     double y_cor;
 }               t_tex;
+
+typedef struct  s_sprite
+{
+    int n;
+    double **cor_dis;
+}               t_spr;
+
 
 typedef struct  s_player
 {
@@ -165,6 +174,7 @@ typedef struct  s_player
     t_map   map;
     t_tex   tex;
     t_scr   scr;
+    t_spr   spr;
 	void *mlx_ptr;
 	void *win_ptr;
     void *img1;
@@ -185,11 +195,11 @@ int	rotate(int key, t_player *p);
 /*
 **  main.c
 */
-void init(char *argv1, int hasSavefile);
+int init(char *argv1, int hasSavefile);
 /*
 **  draw.c
 */
-int draw(t_player *p);
+int draw(t_player *p, int has_save_file);
 int render(t_player *p);
 int render_3d_ProjectionWall(t_player *p);
 int reset_variables(t_player *p);
@@ -220,14 +230,15 @@ int mapColor(t_player *p, char *line, unsigned int *addr);
 **  mapgrid.c
 */
 int mapGrid(t_player *p, char *line);
-char    *mapCopy1(t_player *p, char *line);
-int    oneLine_len(t_player *p, char *line);
+char    *mapCopy1(t_player *p, char *line, int i);
+int    oneLine_len(t_player *p, char *line, int r);
 int setMapWidth(t_player *p);
 /*
 **  check.c
 */
 int nameCheck(char *name, char *check);
 int saveCheck(char *save);
+int mapcheck(t_player *p, int i, int len);
 /*
 **  error.c
 */
@@ -238,9 +249,18 @@ int error(int error);
 int isWhitespace(char c);
 int setPosition(t_player *p, char c);
 int isWall(char c);
+int sprite_cor(t_player *p, int row, int col);
 /*
 **  unit.c
 */
 int	init_unit(t_player *p);
 int setUnitPos(t_player *p);
+/*
+**  bitmap.c
+*/
+int init_bitmap(t_player *p);
+/*
+**  sprite.c
+*/
+int sprite(t_player *p);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 15:05:57 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 22:28:07 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ unsigned int fillTexture(t_player * p, double scale)
 	{
 		index = fmod(p->dis.final_wallHitY, 64) + floor(p->tex.y_cor) * 64;
 		color = p->ray.FacingRight ? p->tex.ea[index] : p->tex.we[index];
+		color = (color >> 1) & 8355711;
 	}
 	else
 	{
@@ -42,7 +43,7 @@ int render_3d_ProjectionWall(t_player *p)
 	int index;
 
 	i = 0;
-	rayDistance = p->dis.final_dis;
+	rayDistance = p->dis.final_dis * (cos(p->ray.angle - p->unit.rotationAngle));
 	distanceProjectionPlane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
 	wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
 	start = (p->scr.height - wallStripHeight) / 2;
@@ -59,7 +60,6 @@ int render_3d_ProjectionWall(t_player *p)
 		p->img_addr[p->ray.id + i * p->scr.width] = color;
 		i++;
 	}
-	p->tex.count = 0;
 	p->tex.y_cor = 0;
 }
 
@@ -90,13 +90,16 @@ int render(t_player *p)
 		reset_variables(p);
 		p->ray.id++;
 	}
+	sprite(p);
 	p->ray.id = 0;
 	return (0);
 }
 
-int draw(t_player *p)
+int draw(t_player *p, int has_save_file)
 {
 	render(p);
+	if (has_save_file)
+		init_bitmap(p);
 	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
 	mlx_destroy_image(p->mlx_ptr, p->img1);
 	return (0);

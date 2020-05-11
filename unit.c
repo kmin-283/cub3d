@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 18:29:19 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 15:26:48 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ int	init_unit(t_player *p)
 	p->unit.turnDirection = 0;
 	p->unit.walkDirection = 0;
 	p->unit.moveSpeed = 4;
-	p->unit.rotationSpeed = (3 * (M_PI / 180));
+	p->unit.rotationSpeed = (4 * (M_PI / 180));
 }
