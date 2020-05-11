@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 19:37:53 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/11 15:02:47 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <fcntl.h>
 #include "mlx.h"
 
-#define TILE_SIZE 64
+#define TILE_SIZE 64//TILE_SIZE는 해상도에 맞춰서 바뀔 수 있도록 수정하기!!!!!//
 
 #define TRUE 1
 #define FALSE 0
@@ -104,6 +104,7 @@ typedef struct  s_dis
 typedef struct  s_ray
 {
     int id;
+    int side;
     double angle;
     int FacingDown;
 	int FacingUp;
@@ -138,6 +139,11 @@ typedef struct  s_map
 
 typedef struct  s_texture
 {
+    void *n_img;
+    void *s_img;
+    void *w_img;
+    void *e_img;
+    void *sp_img;
     unsigned int *no;
     unsigned int *so;
     unsigned int *we;
@@ -145,6 +151,8 @@ typedef struct  s_texture
     unsigned int *sp;
     unsigned int c;
     unsigned int f;
+    unsigned int count;
+    double y_cor;
 }               t_tex;
 
 typedef struct  s_player
@@ -185,6 +193,7 @@ int draw(t_player *p);
 int render(t_player *p);
 int render_3d_ProjectionWall(t_player *p);
 int reset_variables(t_player *p);
+unsigned int fillTexture(t_player *p, double wallstripheight);
 /*
 **  ray.c
 */
@@ -205,6 +214,8 @@ double distanceBetweenPoint(int x1, int y1, int x2, int y2);
 int init_map(t_player *p, char *argv1);
 int parsing_cubfile(t_player *p, char *line);
 int screenRange(t_player *p, char *line);
+int mapTexture(t_player *p, char *line, unsigned int **addr, void **img);
+int mapColor(t_player *p, char *line, unsigned int *addr);
 /*
 **  mapgrid.c
 */

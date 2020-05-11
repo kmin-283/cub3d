@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 20:51:54 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/08 22:33:12 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ int mapColor(t_player *p, char *line, unsigned int *addr)
     return (0);
 }
 
-int mapTexture(t_player *p, char *line, unsigned int **addr)
+int mapTexture(t_player *p, char *line, unsigned int **addr, void **img)
 {
-    void *img;
     int ret;
-    int data[5];
+    int d[5];
 
     if (*addr != NULL)
         return(error(TEXTURE_ERROR));
@@ -53,10 +52,9 @@ int mapTexture(t_player *p, char *line, unsigned int **addr)
     if (nameCheck(line, ".xpm"))
     {
         ret = 0;
-        img = mlx_xpm_file_to_image(p->mlx_ptr, line, &data[0], &data[1]);
-        *addr = (unsigned int *)mlx_get_data_addr(img, &data[2], &data[3], &data[4]);
+        *img = mlx_xpm_file_to_image(p->mlx_ptr, line, &d[0], &d[1]);
+        *addr = (unsigned int *)mlx_get_data_addr(*img, &d[2], &d[3], &d[4]);
     }
-    mlx_destroy_image(p->mlx_ptr, img);//임시로 sanitize를 넘어가기 위해서 해제를 해줌 원래는 나중에 xpm파일을 사용한 이후에 해제할 것.//
     return (ret);
 }
 
@@ -74,8 +72,8 @@ int screenRange(t_player *p, char *line)
         line++;
     while (isWhitespace(*line))
         line++;
-    if (p->scr.width > 1920)//1920*1080에 맞게 바꿔줄 것//
-        p->scr.width = 1920;
+    if (p->scr.width > 1500)//1920*1080에 맞게 바꿔줄 것//
+        p->scr.width = 1500;
     if (p->scr.height > 1080)
         p->scr.height = 1080;
     if (p->scr.width <= 0 || p->scr.height <= 0 || *line != '\0')
@@ -95,15 +93,15 @@ int parsing_cubfile(t_player *p, char *line)
     if (line[i] == 'R' && line[i + 1] == ' ')
         ret = screenRange(p, line);
     else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		ret = mapTexture(p, line, &p->tex.no);
+		ret = mapTexture(p, line, &p->tex.no, &p->tex.n_img);
 	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		ret = mapTexture(p, line, &p->tex.so);
+		ret = mapTexture(p, line, &p->tex.so, &p->tex.s_img);
 	else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-		ret = mapTexture(p, line, &p->tex.we);
+		ret = mapTexture(p, line, &p->tex.we, &p->tex.w_img);
 	else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-		ret = mapTexture(p, line, &p->tex.ea);
+		ret = mapTexture(p, line, &p->tex.ea, &p->tex.e_img);
 	else if (line[i] == 'S' && line[i + 1] == ' ')
-		ret = mapTexture(p, line, &p->tex.sp);
+		ret = mapTexture(p, line, &p->tex.sp, &p->tex.sp_img);
 	else if (line[i] == 'F' && line[i + 1] == ' ')
 		ret = mapColor(p, line, &p->tex.f);
 	else if (line[i] == 'C' && line[i + 1] == ' ')

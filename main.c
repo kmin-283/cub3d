@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 17:13:37 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/08 20:26:16 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void init(char *argv1, int hasSavefile)
 	draw(&p);
  	mlx_hook(p.win_ptr, KEYPRESS, KEYPRESSMASK, key_press, &p);
 	mlx_hook(p.win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, &p);
-	mlx_hook(p.win_ptr, KEYCLOSE, KEYCLOSEMASK, ft_close, &p);
 	mlx_loop(p.mlx_ptr);
 }
 

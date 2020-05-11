@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 19:31:30 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 20:52:19 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/08 19:02:42 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,5 @@ int dis(t_player *p)
 	p->dis.final_wallHitY = (p->dis.horDis < p->dis.verDis) ? p->hor.wallHitY : p->ver.wallHitY;
 	p->dis.final_dis = (p->dis.horDis < p->dis.verDis) ? p->dis.horDis : p->dis.verDis;
 	p->dis.wasHitVer = (p->dis.verDis < p->dis.horDis);
+	p->ray.side = (p->dis.final_dis == p->dis.verDis) ? 1 : 0;
 }
