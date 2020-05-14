@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 20:10:51 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/13 22:34:39 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int screenRange(t_player *p, char *line)
         line++;
     while (isWhitespace(*line))
         line++;
-    if (p->scr.width > 1500)//1920*1080에 맞게 바꿔줄 것//
-        p->scr.width = 1500;
-    if (p->scr.height > 1080)
-        p->scr.height = 1080;
+    if (p->scr.width > 2500)//1920*1080에 맞게 바꿔줄 것//
+        p->scr.width = 1000;
+    if (p->scr.height > 2500)
+        p->scr.height = 1000;
     if (p->scr.width <= 0 || p->scr.height <= 0 || *line != '\0')
 		return (error(R_ERROR));
     return (0);

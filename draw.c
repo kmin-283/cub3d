@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/12 00:36:26 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/13 20:44:48 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int render(t_player *p)
 	p->img_addr = (unsigned int *)mlx_get_data_addr(p->img1, &bpp1, &sl1, &endian1);
 	p->ray.angle = p->unit.rotationAngle - ((double)FOV_ANGLE / 2);
 	in_WhileLoop = FALSE;
-  	while (p->ray.id < p->scr.width)
+
+	p->spr.wallhit = (double *)ft_calloc(p->scr.width, sizeof(double));
+
+	while (p->ray.id < p->scr.width)
 	{
 		ray(p, &in_WhileLoop);
 		hor(p);
@@ -107,6 +110,7 @@ int draw(t_player *p, int has_save_file)
 	if (has_save_file)
 		init_bitmap(p);
 	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
+	free(p->spr.wallhit);
 	mlx_destroy_image(p->mlx_ptr, p->img1);
 	return (0);
 }

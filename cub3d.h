@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 22:55:14 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 16:17:18 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <sys/stat.h>
 #include "mlx.h"
 
-#define TILE_SIZE 64//TILE_SIZE는 해상도에 맞춰서 바뀔 수 있도록 수정하기!!!!!//
+#define TILE_SIZE 32//TILE_SIZE는 해상도에 맞춰서 바뀔 수 있도록 수정하기!!!!!//
 
 #define TRUE 1
 #define FALSE 0
@@ -159,10 +159,25 @@ typedef struct  s_texture
 
 typedef struct  s_sprite
 {
+    double x_cor;
+    double y_cor;
+    int count;
     int n;
+    int visible;
     double **cor_dis;
+    double  *wallhit;
 }               t_spr;
 
+typedef struct s_key
+{
+    int w;
+    int a;
+    int s;
+    int d;
+    int left;
+    int right;
+    int esc;
+}               t_key;
 
 typedef struct  s_player
 {
@@ -175,6 +190,7 @@ typedef struct  s_player
     t_tex   tex;
     t_scr   scr;
     t_spr   spr;
+    t_key   key;
 	void *mlx_ptr;
 	void *win_ptr;
     void *img1;
@@ -192,6 +208,7 @@ int	ft_close(int key, t_player *p);
 int	moveBackandForth(int key, t_player *p);
 int	moveLeftandRight(int key, t_player *p);
 int	rotate(int key, t_player *p);
+int unit_move(t_player *p);
 /*
 **  main.c
 */

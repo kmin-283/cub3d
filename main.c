@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 16:59:35 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/12 22:42:11 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int	free_img(t_player *p)
 	int i;
 
 	i = p->map.height;
-	while (i--)
-		free(p->map.map[i]);
-	free(p->map.map);
+	if (p->map.map)
+	{
+		while (i--)
+			free(p->map.map[i]);
+		free(p->map.map);
+	}
 	mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
 	mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
 	mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
@@ -47,6 +50,7 @@ int init(char *argv1, int hasSavefile)
 	p.win_ptr = mlx_new_window(p.mlx_ptr, p.scr.width, p.scr.height, "cub3d");
 	draw(&p, hasSavefile);
  	mlx_hook(p.win_ptr, KEYPRESS, KEYPRESSMASK, key_press, &p);
+	mlx_loop_hook(p.mlx_ptr, unit_move, &p);
 	mlx_hook(p.win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, &p);
 	mlx_loop(p.mlx_ptr);
 }

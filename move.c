@@ -6,11 +6,31 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/07 23:10:10 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 14:42:24 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int unit_move(t_player *p)
+{
+	if (p->key.w)
+		moveBackandForth(KEY_UP, p);
+	if (p->key.s)
+        moveBackandForth(KEY_DOWN, p);
+	if (p->key.d)
+		moveLeftandRight(KEY_RIGHT, p);
+	if (p->key.a)
+		moveLeftandRight(KEY_LEFT, p);
+	if (p->key.esc)
+		ft_close(1, p);
+	if (p->key.left)
+		rotate(LEFT_ARROW, p);
+	if (p->key.right)
+		rotate(RIGHT_ARROW, p);
+    draw(p, FALSE);
+	return (0);
+}
 
 int rotate(int key, t_player *p)
 {

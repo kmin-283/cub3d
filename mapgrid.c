@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 20:09:25 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/12 22:40:09 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int mapGrid(t_player *p, char *line)
         free(p->map.map);
         p->map.map = NULL;
     }
-    p->map.map = ptr;
+    if (ptr)
+        p->map.map = ptr;
     p->map.height += 1;
     return (0);
 }
