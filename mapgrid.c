@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:26:42 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:06:49 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int setMapWidth(t_player *p)
         ret = mapcheck(p, i, width[i][1]);
         i++;
     }
-    p->map.width = width;
+    if (width)
+        p->map.width = width;
     return (ret);
 }
 

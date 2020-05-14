@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 21:01:27 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:04:15 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int mapColor(t_player *p, char *line, unsigned int *addr)
     int g;
     int b;
 
-    if (*addr != NULL)
+    if (*addr != 0)
         return (error(FLOOR_CEILING_ERROR));
     line += 2;
     r = ft_atoi(line);
@@ -130,8 +130,9 @@ int init_map(t_player *p, char *argv1)
         val = parsing_cubfile(p, line);
     free(line);
     close(fd);
-    init_unit(p);
-    if (val != -1)
+    if (val == 0)
+        val = init_unit(p);
+    if (val == 0)
         val = setMapWidth(p);
     return (val);
 }

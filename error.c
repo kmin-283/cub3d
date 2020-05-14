@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:32:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 21:03:09 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:00:19 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int error(int error)
     error == 13 ? write(1, "Error : Bitmap open falis\n", 27) : 0;
     error == 14 ? write(1, "Error : Sprite Allocation fails\n", 33) : 0;
     error == 15 ? write(1, "Error : Floor and Ceiling double declare\n", 42) : 0;
+    error == 16 ? write(1, "Error : Map declare twice\n", 27) : 0;
     return (-1);
 }

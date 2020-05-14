@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:30:08 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:10:40 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int setUnitPos(t_player *p)
     int i;
 
     i = 0;
+    if (p->unit.x != 0 || p->unit.y != 0)
+        return (error(MAP_DOUBLE_ERROR));
     if (p->map.map)
     {
         while (p->map.map[p->unit.y][i])
@@ -39,10 +41,14 @@ int setUnitPos(t_player *p)
 
 int	init_unit(t_player *p)
 {
-    setUnitPos(p);
+    int ret;
+
+    if ((ret = setUnitPos(p)) == -1)
+        return (-1);
 	p->unit.radius = 4;
 	p->unit.turnDirection = 0;
 	p->unit.walkDirection = 0;
 	p->unit.moveSpeed = 3;
 	p->unit.rotationSpeed = (3 * (M_PI / 180));
+    return (0);
 }

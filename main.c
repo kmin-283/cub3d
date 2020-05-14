@@ -6,11 +6,26 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:50:57 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:08:28 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int free_tex(t_player *p)
+{
+	if (p->tex.n_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
+	if (p->tex.s_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
+	if (p->tex.w_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
+	if (p->tex.e_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
+	if (p->tex.sp_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
+	free(p->mlx_ptr);
+}
 
 int	free_img(t_player *p)
 {
@@ -23,20 +38,13 @@ int	free_img(t_player *p)
 			free(p->map.map[i]);
 		free(p->map.map);
 	}
-	if (p->tex.n_img)
-		mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
-	if (p->tex.s_img)
-		mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
-	if (p->tex.w_img)
-		mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
-	if (p->tex.e_img)
-		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
-	if (p->tex.sp_img)
-		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
-	free(p->mlx_ptr);
-	while (p->map.height--)
-		free(p->map.width[p->map.height]);
-	free(p->map.width);
+	free_tex(p);
+	if (p->map.width)
+	{
+		while (p->map.height--)
+			free(p->map.width[p->map.height]);
+		free(p->map.width);
+	}
 	if (p->spr.cor_dis)
 	{
 		while (p->spr.n--)

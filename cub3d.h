@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 21:01:40 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 22:08:58 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define BITMAP_OPEN_ERROR 13
 # define SPRITE_ALLOCATION_ERROR 14
 # define FLOOR_CEILING_ERROR 15
+# define MAP_DOUBLE_ERROR 16
 /*
 **  struct
 */
@@ -221,6 +222,7 @@ int unit_move(t_player *p);
 **  main.c
 */
 int init(char *argv1, int hasSavefile);
+int free_tex(t_player *p);
 int	free_img(t_player *p);
 /*
 **  draw.c
