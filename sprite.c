@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 19:03:35 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 17:30:55 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:00:40 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int sprite_locate(t_player *p, int i, double angle)
     double xloc;
 
     s_angle = angle - 33 - p->spr.cor_dis[i][3];
+    if (s_angle > 180)
+        s_angle -= 360;
+    else if (s_angle < -180)
+        s_angle += 360;
     tmp_angle = s_angle;
     s_angle = -s_angle;
     xloc = s_angle * p->scr.width / 66;
@@ -69,6 +73,7 @@ int sprite_locate(t_player *p, int i, double angle)
     if (p->spr.visible == TRUE)
         sprite_draw(p, xloc, p->spr.cor_dis[i][2], i);
 }
+
 int sprite_order(t_player *p)
 {
     double *tmp;

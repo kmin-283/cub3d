@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 14:44:24 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:30:08 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,23 @@ int setUnitPos(t_player *p)
     int i;
 
     i = 0;
-    while (p->map.map[p->unit.y][i])
+    if (p->map.map)
     {
-        if (p->map.map[p->unit.y][i] == 'W' || p->map.map[p->unit.y][i] == 'E' ||
-        p->map.map[p->unit.y][i] == 'N' || p->map.map[p->unit.y][i] == 'S')
-            p->unit.x = (i * TILE_SIZE) + TILE_SIZE / 2;
-        i++;
+        while (p->map.map[p->unit.y][i])
+        {
+            if (p->map.map[p->unit.y][i] == 'W' || p->map.map[p->unit.y][i] == 'E' ||
+            p->map.map[p->unit.y][i] == 'N' || p->map.map[p->unit.y][i] == 'S')
+                p->unit.x = (i * TILE_SIZE) + TILE_SIZE / 2;
+            i++;
+        }
+        p->unit.y = (p->unit.y * TILE_SIZE) + TILE_SIZE / 2;
     }
-    p->unit.y = (p->unit.y * TILE_SIZE) + TILE_SIZE / 2;
+    else
+    {
+        while (i < p->map.height)
+            free(p->map.map[i++]);
+        free(p->map.map);
+    }
     return (0);
 }
 

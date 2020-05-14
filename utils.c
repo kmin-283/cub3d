@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 17:20:12 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:47:47 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ int sprite_cor(t_player *p, int row, int col)
     while (i < p->spr.n)
         ptr[i++] = p->spr.cor_dis[i];
     if (!(ptr[i] = (double *)ft_calloc(4, sizeof(double))))
+    {
+        while (i-- > 0)
+            free(ptr[i]);
+        free(ptr);
         return (error(SPRITE_ALLOCATION_ERROR));
+    }
     ptr[i][0] = row * TILE_SIZE + TILE_SIZE / 2;
     ptr[i][1] = col * TILE_SIZE + TILE_SIZE / 2;
     if (p->spr.cor_dis)

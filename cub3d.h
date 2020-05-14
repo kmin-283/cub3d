@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 16:17:18 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:53:32 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,8 +247,8 @@ int mapColor(t_player *p, char *line, unsigned int *addr);
 **  mapgrid.c
 */
 int mapGrid(t_player *p, char *line);
-char    *mapCopy1(t_player *p, char *line, int i);
-int    oneLine_len(t_player *p, char *line, int r);
+char    *mapCopy1(t_player *p, char *line, int i, int *ret);
+int    oneLine_len(t_player *p, char *line, int r, int *error);
 int setMapWidth(t_player *p);
 /*
 **  check.c

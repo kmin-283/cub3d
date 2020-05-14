@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/13 22:34:39 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:10:27 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int mapTexture(t_player *p, char *line, unsigned int **addr, void **img)
     if (nameCheck(line, ".xpm"))
     {
         ret = 0;
-        *img = mlx_xpm_file_to_image(p->mlx_ptr, line, &d[0], &d[1]);
-        *addr = (unsigned int *)mlx_get_data_addr(*img, &d[2], &d[3], &d[4]);
+        if ((*img = mlx_xpm_file_to_image(p->mlx_ptr, line, &d[0], &d[1])) != NULL)
+            *addr = (unsigned int *)mlx_get_data_addr(*img, &d[2], &d[3], &d[4]);
     }
     return (ret);
 }
@@ -112,13 +112,13 @@ int parsing_cubfile(t_player *p, char *line)
 
 int init_map(t_player *p, char *argv1)
 {
-    int ret;
-    int val;
-    int fd;
-    char *line;
+    int     ret;
+    int     val;
+    int     fd;
+    char    *line;
 
     if ((fd = open(argv1, O_RDONLY)) == -1)
-        error(OPEN_ERROR);
+        return (error(OPEN_ERROR));
     while ((ret = get_next_line(fd, &line)) > 0 && val != -1)
     {
         val = parsing_cubfile(p, line);

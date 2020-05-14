@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/12 22:42:11 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:50:57 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,26 @@ int	free_img(t_player *p)
 			free(p->map.map[i]);
 		free(p->map.map);
 	}
-	mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
+	if (p->tex.n_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
+	if (p->tex.s_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
+	if (p->tex.w_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
+	if (p->tex.e_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
+	if (p->tex.sp_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
 	free(p->mlx_ptr);
 	while (p->map.height--)
 		free(p->map.width[p->map.height]);
 	free(p->map.width);
+	if (p->spr.cor_dis)
+	{
+		while (p->spr.n--)
+			free(p->spr.cor_dis[p->spr.n]);
+		free(p->spr.cor_dis);
+	}
 	exit(0);
 	return (0);
 }

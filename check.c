@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 17:37:04 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:36:57 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int mapcheck(t_player *p, int i, int len)
     {
         while (ptr[k])
         {
-            if (ptr[k++] != '1')
+            if (ptr[k] == '1' || ptr[k] == ' ')
+                k++;
+            else
                 return (error(MAP_OPEN_ERROR));
         }
     }

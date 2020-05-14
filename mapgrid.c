@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/12 22:40:09 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 19:37:50 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int setMapWidth(t_player *p)
     {
         if (!(width[i] = (int *)ft_calloc(2, sizeof(int))))
         {
+            while (i-- > 0)
+                free(width[i]);
             free(width);
             return (error(WIDTH_ALLOCATION_ERROR));
         }
@@ -37,7 +39,7 @@ int setMapWidth(t_player *p)
     return (ret);
 }
 
-int    oneLine_len(t_player *p, char *line, int r)
+int    oneLine_len(t_player *p, char *line, int r, int *error)
 {
     int i;
     int count;
@@ -50,7 +52,7 @@ int    oneLine_len(t_player *p, char *line, int r)
             count++;
         else if (line[i] == '2')
         {
-            sprite_cor(p, r, i);
+            *error = sprite_cor(p, r, i);
             count++;
         }
         else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
@@ -63,7 +65,7 @@ int    oneLine_len(t_player *p, char *line, int r)
     return (count);
 }
 
-char    *mapCopy1(t_player *p, char *line, int row)
+char    *mapCopy1(t_player *p, char *line, int row, int *ret)
 {
     int i;
     int j;
@@ -72,18 +74,16 @@ char    *mapCopy1(t_player *p, char *line, int row)
 
     i = 0;
     j = 0;
-    l_len = oneLine_len(p, line, row);
-    tmp = (char *)ft_calloc(l_len + 1, sizeof(char));
+    l_len = oneLine_len(p, line, row, ret);
+    if (*ret == -1)
+        return (NULL);
+    if ((tmp = (char *)ft_calloc(l_len + 1, sizeof(char))) == NULL)
+        return (NULL);
     while (line[i])
     {
         if (line[i] == '1' || line[i] == '0' || line[i] == '2' || line[i] == 'N' ||
         line[i] == 'S' || line[i] == 'W' || line[i] == 'E' || line[i] == ' ')
             tmp[j++] = line[i];
-        else if (!isWhitespace(line[i]))
-        {
-            free(tmp);
-            return (NULL);
-        }
         i++;
     }
     return (tmp);
@@ -93,14 +93,18 @@ int mapGrid(t_player *p, char *line)
 {
     char **ptr;
     int i;
+    int ret;
 
     i = 0;
+    ret = 0;
     if (!(ptr = (char **)ft_calloc(p->map.height + 2, sizeof(char *))))
         return (error(MAP_ALLOCATION_ERROR));
     while (i < p->map.height)
         ptr[i++] = p->map.map[i];
-    if ((ptr[i] = mapCopy1(p, line, i)) == NULL)
+    if ((ptr[i] = mapCopy1(p, line, i, &ret)) == NULL)
     {
+        while (i-- > 0)
+            free(ptr[i]);
         free(ptr);
         return (error(CHAR_IN_MAP_ERROR));
     }
