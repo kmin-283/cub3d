@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 20:23:02 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:51:30 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:38:35 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,28 +56,23 @@ int key_press(int key, t_player *p)
 	return (0);
 }
 
-int key_release(int key, t_player *p)
+int key_release_exc(int key, t_player *p)
 {
 	if (key == KEY_UP)
-	{
 		p->key.w = 0;
-		p->unit.walkDirection = 0;
-	}
 	else if (key == KEY_LEFT)
-	{
 		p->key.a = 0;
-		p->unit.walkDirection = 0;
-	}
 	else if (key == KEY_RIGHT)
-	{
 		p->key.d = 0;
-		p->unit.walkDirection = 0;
-	}
 	else if (key == KEY_DOWN)
-	{
 		p->key.s = 0;
-		p->unit.walkDirection = 0;
-	}
+	p->unit.walkDirection = 0;
+}
+
+int key_release(int key, t_player *p)
+{
+	if (key == KEY_UP || key == KEY_LEFT || key == KEY_RIGHT || key == KEY_DOWN)
+		key_release_exc(key, p);
 	else if (key == LEFT_ARROW)
 	{
 		p->key.left = 0;

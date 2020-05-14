@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:53:32 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:57:11 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ typedef struct  s_dis
 
 typedef struct  s_ray
 {
+    double wall_strip_height;
+	double ray_distance;
+	double distance_projection_plane;
+	int start;
     int id;
     int side;
     double angle;
@@ -159,9 +163,11 @@ typedef struct  s_texture
 
 typedef struct  s_sprite
 {
+    double distance_projection_plane;
+	double sprite_strip_height;
+    int start;
     double x_cor;
     double y_cor;
-    int count;
     int n;
     int visible;
     double **cor_dis;
@@ -202,6 +208,7 @@ typedef struct  s_player
 int key_press(int key, t_player *p);
 int key_release(int key, t_player *p);
 int	ft_close(int key, t_player *p);
+int key_release_exc(int key, t_player *p);
 /*
 **  move.c
 */
@@ -213,6 +220,7 @@ int unit_move(t_player *p);
 **  main.c
 */
 int init(char *argv1, int hasSavefile);
+int	free_img(t_player *p);
 /*
 **  draw.c
 */
@@ -229,6 +237,11 @@ int dis(t_player *p);
 int ver(t_player *p);
 int hor(t_player *p);
 int ray_facing_dir(t_player *p);
+/*
+**  ray2.c
+*/
+int hor_ray_set(t_player *p);
+int ver_ray_set(t_player *p);
 /*
 **  cub3d.c
 */
@@ -276,8 +289,14 @@ int setUnitPos(t_player *p);
 **  bitmap.c
 */
 int init_bitmap(t_player *p);
+int bmp_data(t_player *p, int fd, int file_size);
+int bmp_header(t_player *p, int fd, int file_size);
 /*
 **  sprite.c
 */
 int sprite(t_player *p);
+int sprite_order(t_player *p);
+int sprite_locate(t_player *p, int i, double angle);
+int sprite_draw(t_player *p, double xloc, double dist, int k);
+unsigned int fill_sp_tex(t_player *p, double x, double scale);
 #endif

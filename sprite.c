@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 19:03:35 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:00:40 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:16:38 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ unsigned int fill_sp_tex(t_player *p, double x, double scale)
 
 int sprite_draw(t_player *p, double xloc, double dist, int k)
 {
-    int index;
-    int h;
-    double distanceProjectionPlane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
-	double spriteStripHeight = (64 / dist) * distanceProjectionPlane / 2;
-    int start = (p->scr.height - spriteStripHeight) / 2;
-    int i = xloc;
+    int i;
     int j;
     unsigned int color;
-    double scale = 64 / spriteStripHeight;
-    if (spriteStripHeight > p->scr.height)
-        spriteStripHeight = 0;
-    while (i < xloc + spriteStripHeight)
+    double scale;
+
+    p->spr.distance_projection_plane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
+	p->spr.sprite_strip_height = (64 / dist) * p->spr.distance_projection_plane / 2;
+    p->spr.start = (p->scr.height - p->spr.sprite_strip_height) / 2;
+    i = xloc;
+    scale = 64 / p->spr.sprite_strip_height;
+    if (p->spr.sprite_strip_height > p->scr.height)
+        p->spr.sprite_strip_height = 0;
+    while (i < xloc + p->spr.sprite_strip_height)
     {
-        j = start;
-        while (j < start + spriteStripHeight)
+        j = p->spr.start;
+        while (j < p->spr.start + p->spr.sprite_strip_height)
         {
             color = fill_sp_tex(p, p->spr.x_cor, scale);
             if (color != 0 && i >= 0 && i < p->scr.width && j >= 0 && j < p->scr.height && p->spr.wallhit[i] > dist)
@@ -49,7 +50,6 @@ int sprite_draw(t_player *p, double xloc, double dist, int k)
         p->spr.x_cor += scale;
         i++;
     }
-    p->spr.x_cor = 0;
 }
 
 int sprite_locate(t_player *p, int i, double angle)
@@ -72,6 +72,8 @@ int sprite_locate(t_player *p, int i, double angle)
         p->spr.visible = FALSE;
     if (p->spr.visible == TRUE)
         sprite_draw(p, xloc, p->spr.cor_dis[i][2], i);
+    p->spr.x_cor = 0;
+    p->spr.y_cor = 0;
 }
 
 int sprite_order(t_player *p)

@@ -19,6 +19,7 @@ SRCS =	main.c\
 		draw.c\
 		cub3d.c\
 		ray.c\
+		ray2.c\
 		move.c\
 		bitmap.c\
 		sprite.c

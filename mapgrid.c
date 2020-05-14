@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:37:50 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:26:42 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int mapGrid(t_player *p, char *line)
     int ret;
 
     i = 0;
-    ret = 0;
     if (!(ptr = (char **)ft_calloc(p->map.height + 2, sizeof(char *))))
         return (error(MAP_ALLOCATION_ERROR));
     while (i < p->map.height)

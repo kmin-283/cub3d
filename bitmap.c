@@ -6,13 +6,13 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 16:50:55 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/11 18:09:24 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 20:52:31 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int bmp_header(t_player *p, int fd, int file_size)
+int bmp_header(t_player *p, int fd, int file_size)
 {
     char    header[54];
 
@@ -39,7 +39,7 @@ static int bmp_header(t_player *p, int fd, int file_size)
     return (1);
 }
 
-static int bmp_data(t_player *p, int fd, int file_size)
+int bmp_data(t_player *p, int fd, int file_size)
 {
     char *ptr;
 
