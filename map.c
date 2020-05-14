@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:10:27 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 21:01:27 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int mapColor(t_player *p, char *line, unsigned int *addr)
     int g;
     int b;
 
+    if (*addr != NULL)
+        return (error(FLOOR_CEILING_ERROR));
     line += 2;
     r = ft_atoi(line);
     while(ft_isdigit(*line))

@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:32:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 19:04:23 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 21:03:09 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int error(int error)
     error == 12 ? write(1, "Error : Allocation fails in setMapWidth function\n", 50) : 0;
     error == 13 ? write(1, "Error : Bitmap open falis\n", 27) : 0;
     error == 14 ? write(1, "Error : Sprite Allocation fails\n", 33) : 0;
+    error == 15 ? write(1, "Error : Floor and Ceiling double declare\n", 42) : 0;
     return (-1);
 }

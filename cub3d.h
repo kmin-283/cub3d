@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:57:11 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/14 21:01:40 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@
 # define WIDTH_ALLOCATION_ERROR 12
 # define BITMAP_OPEN_ERROR 13
 # define SPRITE_ALLOCATION_ERROR 14
+# define FLOOR_CEILING_ERROR 15
 /*
 **  struct
 */
