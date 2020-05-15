@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:08:58 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:14:01 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@
 # define SPRITE_ALLOCATION_ERROR 14
 # define FLOOR_CEILING_ERROR 15
 # define MAP_DOUBLE_ERROR 16
+# define FILE_EMPTY 17
 /*
 **  struct
 */
@@ -123,6 +124,7 @@ typedef struct  s_ray
 
 typedef struct  s_unit
 {
+    int pos;
     int x;
     int y;
     int radius;
@@ -143,6 +145,7 @@ typedef struct  s_map
 {
     char **map;
     int **width;
+    int max_width;
     int height;
 }               t_map;
 
@@ -269,9 +272,11 @@ int setMapWidth(t_player *p);
 /*
 **  check.c
 */
+int check_cub(t_player *p);
 int nameCheck(char *name, char *check);
 int saveCheck(char *save);
 int mapcheck(t_player *p, int i, int len);
+int empty_file(t_player *p, int *val);
 /*
 **  error.c
 */

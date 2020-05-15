@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:10:40 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:10:28 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int setUnitPos(t_player *p)
     int i;
 
     i = 0;
-    if (p->unit.x != 0 || p->unit.y != 0)
+    if (p->unit.pos > 1)
         return (error(MAP_DOUBLE_ERROR));
     if (p->map.map)
     {

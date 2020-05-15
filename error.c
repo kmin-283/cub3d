@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:32:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:00:19 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:06:00 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ int error(int error)
     error == 7 ? write(1, "Error : Texture Invalid\n", 25) : 0;
     error == 8 ? write(1, "Error : Color Invalid\n", 23) : 0;
     error == 9 ? write(1, "Error : Map is Open\nMap must be Closed\n",40) : 0;
-    error == 10 ? write(1, "Error : Invalid character in Map or Map Allocation fails\n", 58) : 0;
+    error == 10 ? write(1, "Error : Invalid character in Map or Map Error\n", 47) : 0;
     error == 11 ? write(1, "Error : Allocation fails in mapGrid function\n", 44) : 0;
     error == 12 ? write(1, "Error : Allocation fails in setMapWidth function\n", 50) : 0;
     error == 13 ? write(1, "Error : Bitmap open falis\n", 27) : 0;
     error == 14 ? write(1, "Error : Sprite Allocation fails\n", 33) : 0;
     error == 15 ? write(1, "Error : Floor and Ceiling double declare\n", 42) : 0;
     error == 16 ? write(1, "Error : Map declare twice\n", 27) : 0;
+    error == 17 ? write(1, "Error : .Cub file is empty\n", 28) : 0;
     return (-1);
 }

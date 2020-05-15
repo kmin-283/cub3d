@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:08:28 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 17:23:56 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	free_img(t_player *p)
 	if (p->map.map)
 	{
 		while (i--)
+		{
 			free(p->map.map[i]);
+		}
 		free(p->map.map);
 	}
 	free_tex(p);
@@ -61,7 +63,7 @@ int init(char *argv1, int hasSavefile)
 
 	ft_memset(&p, 0, sizeof(p));
 	p.mlx_ptr = mlx_init();
-	if (init_map(&p, argv1) == -1)
+	if (init_map(&p, argv1) != 0)
 	{
 		free_img(&p);
 		return (0);
@@ -71,6 +73,7 @@ int init(char *argv1, int hasSavefile)
  	mlx_hook(p.win_ptr, KEYPRESS, KEYPRESSMASK, key_press, &p);
 	mlx_loop_hook(p.mlx_ptr, unit_move, &p);
 	mlx_hook(p.win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, &p);
+	mlx_hook(p.win_ptr, 17, 17, ft_close, &p);
 	mlx_loop(p.mlx_ptr);
 }
 

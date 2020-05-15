@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:04:15 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:14:03 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,12 @@ int init_map(t_player *p, char *argv1)
         val = parsing_cubfile(p, line);
     free(line);
     close(fd);
+    if (empty_file(p, &val))
+        error(FILE_EMPTY);
     if (val == 0)
         val = init_unit(p);
+    if (val == 0)
+        val = check_cub(p);
     if (val == 0)
         val = setMapWidth(p);
     return (val);

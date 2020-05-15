@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:01:50 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 17:19:54 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int setPosition(t_player *p, char c)
         p->unit.rotationAngle = 2 * M_PI;
     else if (c == 'W')
         p->unit.rotationAngle = M_PI;
-    else
-        return (0);
     p->unit.y = p->map.height;
-    return (1);
+    if (p->unit.pos != 1)
+        return (-1);
+    return (0);
 }
 
 int isWall(char c)

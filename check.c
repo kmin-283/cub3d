@@ -6,11 +6,38 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:38:56 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:22:52 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int empty_file(t_player *p, int *val)
+{
+    if (*val == 0)
+    {
+        if (p->unit.x == 0 && p->unit.y == 0 && p->scr.height == 0 &&
+            p->scr.width == 0 && p->tex.no == NULL && p->tex.so == NULL &&
+            p->tex.we == NULL && p->tex.ea == NULL && p->tex.sp == NULL &&
+            p->tex.c == 0 && p->tex.f == 0 && p->map.height == 0)
+            {
+                *val = -1;
+                return (1);
+            }
+        else
+            return (0);
+    }
+    else
+        return (0);
+}
+
+int check_cub(t_player *p)
+{
+    if (p->tex.no == NULL || p->tex.so == NULL || p->tex.we == NULL ||
+    p->tex.ea == NULL || p->tex.sp == NULL || p->tex.c == 0 || p->tex.f == 0)
+        return (error(TEXTURE_ERROR));
+    return (0);
+}
 
 int mapcheck(t_player *p, int i, int len)
 {

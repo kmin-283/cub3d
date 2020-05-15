@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 22:06:49 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/15 19:01:45 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int setMapWidth(t_player *p)
     return (ret);
 }
 
-int    oneLine_len(t_player *p, char *line, int r, int *error)
+int    oneLine_len(t_player *p, char *line, int r, int *err)
 {
     int i;
     int count;
@@ -53,12 +53,13 @@ int    oneLine_len(t_player *p, char *line, int r, int *error)
             count++;
         else if (line[i] == '2')
         {
-            *error = sprite_cor(p, r, i);
+            *err = sprite_cor(p, r, i);
             count++;
         }
         else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
         {
-            setPosition(p, line[i]);
+            p->unit.pos += 1;
+            *err = setPosition(p, line[i]);
             count++;
         }
         i++;
@@ -82,9 +83,7 @@ char    *mapCopy1(t_player *p, char *line, int row, int *ret)
         return (NULL);
     while (line[i])
     {
-        if (line[i] == '1' || line[i] == '0' || line[i] == '2' || line[i] == 'N' ||
-        line[i] == 'S' || line[i] == 'W' || line[i] == 'E' || line[i] == ' ')
-            tmp[j++] = line[i];
+        tmp[j++] = line[i];
         i++;
     }
     return (tmp);
@@ -103,16 +102,11 @@ int mapGrid(t_player *p, char *line)
         ptr[i++] = p->map.map[i];
     if ((ptr[i] = mapCopy1(p, line, i, &ret)) == NULL)
     {
-        while (i-- > 0)
-            free(ptr[i]);
         free(ptr);
         return (error(CHAR_IN_MAP_ERROR));
     }
     if (p->map.map)
-    {
         free(p->map.map);
-        p->map.map = NULL;
-    }
     if (ptr)
         p->map.map = ptr;
     p->map.height += 1;
