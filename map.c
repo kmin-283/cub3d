@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/15 19:14:03 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/17 00:12:37 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,35 @@ int parsing_cubfile(t_player *p, char *line)
     return (ret);
 }
 
+int sprite_list(t_player *p)
+{
+    int i;
+    int j;
+    int k;
+
+    i = 0;
+    k = 0;
+    if (p->sprite != NULL)
+        free(p->sprite);
+    if (!(p->sprite = ft_calloc(p->map.spr_num, sizeof(t_sprite))))
+        return (error(SPRITE_ALLOCATION_ERROR));
+    while (i < p->map.height)
+    {
+        j = 0;
+        while (j < p->map.width[i])
+        {
+            if (p->map.map[i][j] == '2')
+            {
+                p->sprite[k].x = (double)j + 0.5;
+                p->sprite[k++].y = (double)i + 0.5;
+            }
+            j++;
+        }
+        i++;
+    }
+    return (0);
+}
+
 int init_map(t_player *p, char *argv1)
 {
     int     ret;
@@ -138,5 +167,6 @@ int init_map(t_player *p, char *argv1)
         val = check_cub(p);
     if (val == 0)
         val = setMapWidth(p);
+    sprite_list(p);
     return (val);
 }

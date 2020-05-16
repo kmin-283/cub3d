@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:49:38 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/16 23:44:59 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ unsigned int fillTexture(t_player * p, double scale, double t_start)
 		t_start = p->tex.y_cor;
 	if (p->ray.side)
 	{
-		index = fmod(p->dis.final_wallHitY, 64) + floor(p->tex.y_cor + t_start) * 64;
+		index = (p->dis.final_wallHitY - floor(p->dis.final_wallHitY)) * 64 + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.FacingRight ? p->tex.ea[index] : p->tex.we[index];
 		color = (color >> 1) & 8355711;
 	}
 	else
 	{
-		index = fmod(p->dis.final_wallHitX, 64) + floor(p->tex.y_cor + t_start) * 64;
+		index = (p->dis.final_wallHitX - floor(p->dis.final_wallHitX)) * 64 + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.FacingDown ? p->tex.so[index] : p->tex.no[index];
 	}
 	p->tex.y_cor += scale;
@@ -46,8 +46,8 @@ int render_3d_ProjectionWall(t_player *p)
 	i = 0;
 	p->ray.ray_distance = p->dis.final_dis * (cos(p->ray.angle - p->unit.rotationAngle));
 	p->ray.distance_projection_plane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
-	p->ray.wall_strip_height = (TILE_SIZE / p->ray.ray_distance) * p->ray.distance_projection_plane;
-	p->ray.start = (p->scr.height - p->ray.wall_strip_height) / 2;
+	p->ray.wall_strip_height = (1 / p->ray.ray_distance) * p->ray.distance_projection_plane;
+	p->ray.start = ((double)p->scr.height / 2 - p->ray.wall_strip_height / 2);
 	if (p->ray.start < 0)
 		p->ray.start = 0;
 	texture_start = p->ray.start - p->scr.height / 2 + p->ray.wall_strip_height / 2;

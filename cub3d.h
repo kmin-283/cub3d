@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/15 19:14:01 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/17 00:18:47 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,14 @@ typedef struct  s_ray
     double wall_strip_height;
 	double ray_distance;
 	double distance_projection_plane;
-	int start;
+	double start;
     int id;
     int side;
     double angle;
+    double dirx;
+    double diry;
+    double v;
+    double w;
     int FacingDown;
 	int FacingUp;
 	int FacingLeft;
@@ -125,6 +129,10 @@ typedef struct  s_ray
 typedef struct  s_unit
 {
     int pos;
+    double dirx;
+    double diry;
+    double posx;
+    double posy;
     int x;
     int y;
     int radius;
@@ -143,8 +151,9 @@ typedef struct  s_screen
 
 typedef struct  s_map
 {
+    int spr_num;
     char **map;
-    int **width;
+    int *width;
     int max_width;
     int height;
 }               t_map;
@@ -164,6 +173,7 @@ typedef struct  s_texture
     unsigned int c;
     unsigned int f;
     double y_cor;
+    double x_cor;
 }               t_tex;
 
 typedef struct  s_sprite
@@ -173,9 +183,6 @@ typedef struct  s_sprite
     int start;
     double x_cor;
     double y_cor;
-    int n;
-    int visible;
-    double **cor_dis;
     double  *wallhit;
 }               t_spr;
 
@@ -190,6 +197,16 @@ typedef struct s_key
     int esc;
 }               t_key;
 
+typedef struct s_spr
+{
+    double x;
+    double y;
+    double d;
+    double a;
+    int     visible;
+}               t_sprite;
+
+
 typedef struct  s_player
 {
     t_ray   ray;
@@ -200,6 +217,7 @@ typedef struct  s_player
     t_map   map;
     t_tex   tex;
     t_scr   scr;
+    t_sprite   *sprite;
     t_spr   spr;
     t_key   key;
 	void *mlx_ptr;
@@ -253,7 +271,7 @@ int ver_ray_set(t_player *p);
 */
 double normalizeAngle(double angle);
 int hasWallAt(t_player *p, int x, int y);
-double distanceBetweenPoint(int x1, int y1, int x2, int y2);
+double distanceBetweenPoint(double x1, double y1, double x2, double y2);
 /*
 **  map.c
 */

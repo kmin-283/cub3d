@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 19:31:30 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:23:48 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/16 22:46:33 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,44 @@ int ray_facing_dir(t_player *p)
 
 int ray(t_player *p, int *in_while_loop)
 {
+	double dist;
+	double angle;
+
 	if (*in_while_loop == TRUE)
 		p->ray.angle += (double)FOV_ANGLE / p->scr.width;
 	else
 		*in_while_loop = TRUE;
 	p->ray.angle = normalizeAngle(p->ray.angle);
+
+/* 	angle = ((double)p->ray.id - (p->scr.width / 2)) * 33 / (p->scr.width / 2);
+	angle = angle * M_PI / 180;
+	p->ray.dirx = p->unit.dirx * cos(p->ray.angle) - p->unit.diry * sin(p->ray.angle);
+	p->ray.diry = p->unit.dirx * cos(p->ray.angle) + p->unit.diry * sin(p->ray.angle);
+	dist = hypot(p->ray.dirx, p->ray.diry);
+	p->ray.dirx /= dist;
+	p->ray.diry /= dist;
+	if (p->ray.dirx >= 0)
+		p->ray.v = 1;
+	else
+		p->ray.v = 0;
+	if (p->ray.diry >= 0)
+		p->ray.w = 1;
+	else
+		p->ray.w = 0; */
 	ray_facing_dir(p);
 }
 
 int hor(t_player *p)
 {
+	double y;
+	double x;
+
 	hor_ray_set(p);
-	while (p->hor.nexttouchX >= 0 && p->hor.nexttouchY >=0 && p->hor.nexttouchY <= p->scr.height\
-	&& p->hor.nexttouchX <= p->scr.width)
+/* 	y = floor(p->unit.posx) + p->ray.w;
+	x = p->unit.posx + (y - p->unit.posy) * (p->ray.x / p->ray.y);
+	printf("%f %f\n",x,y);
+	while (floor(x) > 0 && floor(x) < p->map.width[(int)y]) */
+	while (p->hor.foundWallHit == FALSE)
 	{
 		if (hasWallAt(p, p->hor.nexttouchX, p->hor.nexttouchY))
 		{
@@ -53,9 +78,11 @@ int hor(t_player *p)
 
 int ver(t_player *p)
 {
+	double x;
+	double y;
+
 	ver_ray_set(p);
-	while (p->ver.nexttouchX >= 0 && p->ver.nexttouchY >=0 && p->ver.nexttouchY <= p->scr.height\
-	&& p->ver.nexttouchX <= p->scr.width)
+	while (p->ver.foundWallHit == FALSE)
 	{
 		if (hasWallAt(p, p->ver.nexttouchX, p->ver.nexttouchY))
 		{
@@ -66,19 +93,30 @@ int ver(t_player *p)
 		}
 		else
 		{
+
 			p->ver.nexttouchX += p->ver.x_step;
 			p->ver.nexttouchY += p->ver.y_step;
 		}
 	}
+
+/* 	x = floor(p->unit.posx) + p->ray.v;
+	y = p->unit.posy + (x - p->unit.posx) * (p->ray.diry / p->ray.dirx);
+	while (floor(y) > 0 && floor(y) < p->map.height)
+	{
+		if (p->map.map[(int)floor(y)][(int)(x - 1 + p->ray.v) == '1'])
+		{
+			p->
+		}
+	} */
 }
 
 int dis(t_player *p)
 {
 	p->dis.horDis = (p->hor.foundWallHit) ?
-	distanceBetweenPoint(p->unit.x, p->unit.y, p->hor.wallHitX, p->hor.wallHitY)
+	distanceBetweenPoint(p->unit.posx, p->unit.posy, p->hor.wallHitX, p->hor.wallHitY)
 	: __INT_MAX__;
 	p->dis.verDis = (p->ver.foundWallHit) ?
-	distanceBetweenPoint(p->unit.x, p->unit.y, p->ver.wallHitX, p->ver.wallHitY)
+	distanceBetweenPoint(p->unit.posx, p->unit.posy, p->ver.wallHitX, p->ver.wallHitY)
 	: __INT_MAX__;
 	p->dis.final_wallHitX = (p->dis.horDis < p->dis.verDis) ? p->hor.wallHitX : p->ver.wallHitX;
 	p->dis.final_wallHitY = (p->dis.horDis < p->dis.verDis) ? p->hor.wallHitY : p->ver.wallHitY;

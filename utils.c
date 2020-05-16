@@ -6,40 +6,11 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/15 17:19:54 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/17 00:20:11 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int sprite_cor(t_player *p, int row, int col)
-{
-    double **ptr;
-    int i;
-
-    i = 0;
-    if(!(ptr = (double **)ft_calloc(p->spr.n + 1, sizeof(double *))))
-        return (error(SPRITE_ALLOCATION_ERROR));
-    while (i < p->spr.n)
-        ptr[i++] = p->spr.cor_dis[i];
-    if (!(ptr[i] = (double *)ft_calloc(4, sizeof(double))))
-    {
-        while (i-- > 0)
-            free(ptr[i]);
-        free(ptr);
-        return (error(SPRITE_ALLOCATION_ERROR));
-    }
-    ptr[i][0] = row * TILE_SIZE + TILE_SIZE / 2;
-    ptr[i][1] = col * TILE_SIZE + TILE_SIZE / 2;
-    if (p->spr.cor_dis)
-    {
-        free(p->spr.cor_dis);
-        p->spr.cor_dis = NULL;
-    }
-    p->spr.cor_dis = ptr;
-    p->spr.n++;
-    return (0);
-}
 
 int isWhitespace(char c)
 {
@@ -50,13 +21,25 @@ int isWhitespace(char c)
 int setPosition(t_player *p, char c)
 {
     if (c == 'N')
+    {
+        p->unit.diry = -1;
         p->unit.rotationAngle = (3 * M_PI) / 2;
+    }
     else if (c == 'S')
+    {
+        p->unit.diry = 1;
         p->unit.rotationAngle = M_PI / 2;
+    }
     else if (c == 'E')
+    {
+        p->unit.dirx = 1;
         p->unit.rotationAngle = 2 * M_PI;
+    }
     else if (c == 'W')
+    {
+        p->unit.dirx = -1;
         p->unit.rotationAngle = M_PI;
+    }
     p->unit.y = p->map.height;
     if (p->unit.pos != 1)
         return (-1);

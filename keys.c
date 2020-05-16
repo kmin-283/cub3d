@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 20:23:02 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 20:38:35 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/17 00:19:56 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ int	ft_close(int key, t_player *p)
 	while (i--)
 		free(p->map.map[i]);
 	free(p->map.map);
-	while (p->spr.n--)
-		free(p->spr.cor_dis[p->spr.n]);
-	free(p->spr.cor_dis);
 	mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
 	mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
 	mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
@@ -30,9 +27,8 @@ int	ft_close(int key, t_player *p)
 	mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
 	mlx_destroy_window(p->mlx_ptr, p->win_ptr);
 	free(p->mlx_ptr);
-	while (p->map.height--)
-		free(p->map.width[p->map.height]);
 	free(p->map.width);
+	free(p->sprite);
 	exit(0);
 	return (0);
 }

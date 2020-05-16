@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/14 14:42:24 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/16 23:04:58 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,17 @@ int unit_move(t_player *p)
 
 int rotate(int key, t_player *p)
 {
+	double dist;
+
 	if (key == RIGHT_ARROW)
 		p->unit.turnDirection = 1;
 	else if (key == LEFT_ARROW)
 		p->unit.turnDirection = -1;
+	p->unit.dirx = p->unit.dirx * cos(p->unit.turnDirection * p->unit.rotationSpeed) - p->unit.diry * sin(p->unit.turnDirection * p->unit.rotationSpeed);
+	p->unit.diry = p->unit.diry * cos(p->unit.turnDirection * p->unit.rotationSpeed) + p->unit.dirx * sin(p->unit.turnDirection * p->unit.rotationSpeed);
+	dist = hypot(p->unit.dirx, p->unit.diry);
+	p->unit.dirx /= dist;
+	p->unit.diry /= dist;
 	p->unit.rotationAngle += p->unit.turnDirection * p->unit.rotationSpeed;
 }
 
@@ -51,14 +58,27 @@ int	moveBackandForth(int key, t_player *p)
 		p->unit.walkDirection = 1;
 	else if (key == KEY_DOWN)
 		p->unit.walkDirection = -1;
-	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
-    newUnitX = p->unit.x + cos(p->unit.rotationAngle) * moveStep;
-	newUnitY = p->unit.y + sin(p->unit.rotationAngle) * moveStep;
+/* 	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
+    newUnitX = p->unit.posx + cos(p->unit.rotationAngle) * moveStep;
+	newUnitY = p->unit.posy + sin(p->unit.rotationAngle) * moveStep;
     if (!hasWallAt(p, newUnitX, newUnitY))
     {
-		p->unit.x = newUnitX;
-		p->unit.y = newUnitY;
-	}
+		p->unit.posx = newUnitX;
+		p->unit.posy = newUnitY;
+	} */
+
+	p->unit.posx += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+		p->unit.posx -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
+	p->unit.posy += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+		p->unit.posy -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
+ /* 	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
+	{
+		p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] = '0';//아이템 먹음//
+		p->map.spr_num--;
+		ft_slist(p);
+	} */
 }
 
 int	moveLeftandRight(int key, t_player *p)
@@ -71,12 +91,25 @@ int	moveLeftandRight(int key, t_player *p)
 		p->unit.walkDirection = 1;
 	else if (key == KEY_RIGHT)
 		p->unit.walkDirection = -1;
-	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
-    newUnitX = p->unit.x + sin(p->unit.rotationAngle) * moveStep;
-	newUnitY = p->unit.y - cos(p->unit.rotationAngle) * moveStep;
+/* 	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
+    newUnitX = p->unit.posx + sin(p->unit.rotationAngle) * moveStep;
+	newUnitY = p->unit.posy - cos(p->unit.rotationAngle) * moveStep;
     if (!hasWallAt(p, newUnitX, newUnitY))
     {
-		p->unit.x = newUnitX;
-		p->unit.y = newUnitY;
-	}
+		p->unit.posx = newUnitX;
+		p->unit.posy = newUnitY;
+	} */
+
+	p->unit.posx -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+		p->unit.posx += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
+	p->unit.posy += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+		p->unit.posy -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
+/*  	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
+	{
+		p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] = '0';
+		p->map.spr_num--;
+		ft_slist(p);
+	} */
 }

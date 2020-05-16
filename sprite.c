@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 19:03:35 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/15 17:19:51 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/17 00:17:21 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int sprite_draw(t_player *p, double xloc, double dist, int k)
     double scale;
 
     p->spr.distance_projection_plane = (p->scr.width / 2) / tan((double)FOV_ANGLE / 2);
-	p->spr.sprite_strip_height = (64 / dist) * p->spr.distance_projection_plane / 2;
+	p->spr.sprite_strip_height = (1 / dist) * p->spr.distance_projection_plane;
     p->spr.start = (p->scr.height - p->spr.sprite_strip_height) / 2;
     i = xloc;
     scale = 64 / p->spr.sprite_strip_height;
@@ -58,7 +58,7 @@ int sprite_locate(t_player *p, int i, double angle)
     double tmp_angle;
     double xloc;
 
-    s_angle = angle - 33 - p->spr.cor_dis[i][3];
+    s_angle = angle - 33 - p->sprite[i].a;
     if (s_angle > 180)
         s_angle -= 360;
     else if (s_angle < -180)
@@ -67,32 +67,32 @@ int sprite_locate(t_player *p, int i, double angle)
     s_angle = -s_angle;
     xloc = s_angle * p->scr.width / 66;
     if (s_angle < FOV_ANGLE * 180 / M_PI)
-        p->spr.visible = TRUE;
+        p->sprite[i].visible = TRUE;
     else
-        p->spr.visible = FALSE;
-    if (p->spr.visible == TRUE)
-        sprite_draw(p, xloc, p->spr.cor_dis[i][2], i);
+        p->sprite[i].visible = FALSE;
+    if (p->sprite[i].visible == TRUE)
+        sprite_draw(p, xloc, p->sprite[i].d, i);
     p->spr.x_cor = 0;
     p->spr.y_cor = 0;
 }
 
 int sprite_order(t_player *p)
 {
-    double *tmp;
+    t_sprite tmp;
     int i;
 	int	j;
 
 	i = 0;
-	while (i < p->spr.n - 1)
+	while (i < p->map.spr_num - 1)
 	{
 		j = i + 1;
-		while (j < p->spr.n)
+		while (j < p->map.spr_num)
 		{
-			if (p->spr.cor_dis[i][2] < p->spr.cor_dis[j][2])
+			if (p->sprite[i].d < p->sprite[j].d)
 			{
-				tmp = p->spr.cor_dis[i];
-				p->spr.cor_dis[i] = p->spr.cor_dis[j];
-				p->spr.cor_dis[j] = tmp;
+				tmp = p->sprite[i];
+				p->sprite[i] = p->sprite[j];
+				p->sprite[j] = tmp;
 			}
 			j++;
 		}
@@ -108,16 +108,16 @@ int sprite(t_player *p)
 
     i = 0;
     angle = normalizeAngle(p->unit.rotationAngle) * 180 / M_PI;
-    while (i < p->spr.n)
+    while (i < p->map.spr_num)
     {
-        p->spr.cor_dis[i][2] = hypot(p->spr.cor_dis[i][1] - p->unit.x, p->spr.cor_dis[i][0] - p->unit.y);
-        p->spr.cor_dis[i][3] = atan2(p->spr.cor_dis[i][0] - p->unit.y, p->spr.cor_dis[i][1] - p->unit.x);
-        p->spr.cor_dis[i][3] = normalizeAngle(p->spr.cor_dis[i][3]) * 180 / M_PI;
+        p->sprite[i].d = hypot(p->sprite[i].x - p->unit.posx, p->sprite[i].y - p->unit.posy);
+        p->sprite[i].a = atan2(p->sprite[i].y - p->unit.posy, p->sprite[i].x - p->unit.posx);
+        p->sprite[i].a = normalizeAngle(p->sprite[i].a) * 180 / M_PI;
         i++;
     }
     sprite_order(p);
     i = 0;
-    while (i < p->spr.n)
+    while (i < p->map.spr_num)
     {
         sprite_locate(p, i, angle);
         i++;

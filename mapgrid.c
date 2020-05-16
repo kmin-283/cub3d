@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/15 19:01:45 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/16 19:34:00 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 int setMapWidth(t_player *p)
 {
-    int **width;
+    int *width;
     int i;
+    int k;
     int ret;
 
     i = 0;
-    if (!(width = (int **)ft_calloc(p->map.height, sizeof(int *))))
+
+    ret = 0;
+    if (!(width = (int *)ft_calloc(p->map.height, sizeof(int))))
         return (error(WIDTH_ALLOCATION_ERROR));
     while (i < p->map.height && ret != -1)
     {
-        if (!(width[i] = (int *)ft_calloc(2, sizeof(int))))
+        k = 0;
+        while (isWhitespace(p->map.map[i][k]))
+            k++;
+        while (p->map.map[i][k])
         {
-            while (i-- > 0)
-                free(width[i]);
-            free(width);
-            return (error(WIDTH_ALLOCATION_ERROR));
+            width[i] += 1;
+            k++;
         }
-        width[i][0] = i;
-        width[i][1] = ft_strlen(p->map.map[i]);
-        ret = mapcheck(p, i, width[i][1]);
+        ret = mapcheck(p, i, width[i]);
         i++;
     }
-    if (width)
+    if (!p->map.width)
         p->map.width = width;
     return (ret);
 }
@@ -53,12 +55,14 @@ int    oneLine_len(t_player *p, char *line, int r, int *err)
             count++;
         else if (line[i] == '2')
         {
-            *err = sprite_cor(p, r, i);
+            p->map.spr_num++;
             count++;
         }
         else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
         {
             p->unit.pos += 1;
+            p->unit.posx = i + 0.5;
+            p->unit.posy = r + 0.5;
             *err = setPosition(p, line[i]);
             count++;
         }
