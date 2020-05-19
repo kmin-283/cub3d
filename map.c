@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/18 22:26:06 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 19:11:28 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int parsing_cubfile(t_player *p, char *line)
     int ret;
 
     i = 0;
+    ret = 0;
     while (isWhitespace(line[i]))
         i++;
     if (line[i] == 'R' && line[i + 1] == ' ')
@@ -112,35 +113,6 @@ int parsing_cubfile(t_player *p, char *line)
     return (ret);
 }
 
-int sprite_list(t_player *p)
-{
-    int i;
-    int j;
-    int k;
-
-    i = 0;
-    k = 0;
-    if (p->sprite != NULL)
-        free(p->sprite);
-    if (!(p->sprite = ft_calloc(p->map.spr_num, sizeof(t_sprite))))
-        return (error(SPRITE_ALLOCATION_ERROR));
-    while (i < p->map.height)
-    {
-        j = 0;
-        while (j < p->map.width[i])
-        {
-            if (p->map.map[i][j] == '2')
-            {
-                p->sprite[k].x = (double)j + 0.5;
-                p->sprite[k++].y = (double)i + 0.5;
-            }
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
-
 int init_map(t_player *p, char *argv1)
 {
     int     ret;
@@ -148,6 +120,7 @@ int init_map(t_player *p, char *argv1)
     int     fd;
     char    *line;
 
+    val = 0;
     if ((fd = open(argv1, O_RDONLY)) == -1)
         return (error(OPEN_ERROR));
     while ((ret = get_next_line(fd, &line)) > 0 && val != -1)
@@ -159,14 +132,7 @@ int init_map(t_player *p, char *argv1)
         val = parsing_cubfile(p, line);
     free(line);
     close(fd);
-    if (empty_file(p, &val))
-        error(FILE_EMPTY);
     if (val == 0)
-        val = init_unit(p);
-    if (val == 0)
-        val = check_cub(p);
-    if (val == 0)
-        val = setMapWidth(p);
-    sprite_list(p);
+        val = check_and_set(p);
     return (val);
 }

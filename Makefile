@@ -11,11 +11,12 @@ OPTION = -lm -lmlx -lXext -lX11 -no-pie -L ./gnl -lftgnl -I $(INCLUDES)
 SRCS =	main.c\
 		keys.c\
 		check.c\
+		mapcheck.c\
 		map.c\
 		error.c\
 		utils.c\
 		mapgrid.c\
-		unit.c\
+		unit_and_sprite.c\
 		draw.c\
 		cub3d.c\
 		ray.c\

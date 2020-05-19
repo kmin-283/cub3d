@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:08 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/16 22:26:08 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 19:18:06 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int hasWallAt(t_player *p, int x, int y)
 	int mapIndexX;
 	int mapIndexY;
 
-	if (x < 0 || y < 0 || y > p->map.height || x > p->map.width[y])
+	if (x < 0 || y < 0 || y > p->map.height - 1 || x > p->map.width[y])
 		return TRUE;
 	mapIndexX = x;
 	mapIndexY = y;

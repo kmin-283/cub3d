@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/17 00:18:47 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 19:12:02 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,11 +290,16 @@ int setMapWidth(t_player *p);
 /*
 **  check.c
 */
-int check_cub(t_player *p);
 int nameCheck(char *name, char *check);
 int saveCheck(char *save);
+int empty_file(t_player *p);
+int check_and_set(t_player *p);
+/*
+**  mapcheck.c
+*/
 int mapcheck(t_player *p, int i, int len);
-int empty_file(t_player *p, int *val);
+int verify_else(t_player *p, int i, int k);
+int verify_space(t_player *p, int i, int k);
 /*
 **  error.c
 */
@@ -309,6 +314,7 @@ int sprite_cor(t_player *p, int row, int col);
 /*
 **  unit.c
 */
+int sprite_list(t_player *p);
 int	init_unit(t_player *p);
 int setUnitPos(t_player *p);
 /*
