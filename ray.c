@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 19:31:30 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/16 22:46:33 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 15:00:13 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,6 @@ int ray(t_player *p, int *in_while_loop)
 	else
 		*in_while_loop = TRUE;
 	p->ray.angle = normalizeAngle(p->ray.angle);
-
-/* 	angle = ((double)p->ray.id - (p->scr.width / 2)) * 33 / (p->scr.width / 2);
-	angle = angle * M_PI / 180;
-	p->ray.dirx = p->unit.dirx * cos(p->ray.angle) - p->unit.diry * sin(p->ray.angle);
-	p->ray.diry = p->unit.dirx * cos(p->ray.angle) + p->unit.diry * sin(p->ray.angle);
-	dist = hypot(p->ray.dirx, p->ray.diry);
-	p->ray.dirx /= dist;
-	p->ray.diry /= dist;
-	if (p->ray.dirx >= 0)
-		p->ray.v = 1;
-	else
-		p->ray.v = 0;
-	if (p->ray.diry >= 0)
-		p->ray.w = 1;
-	else
-		p->ray.w = 0; */
 	ray_facing_dir(p);
 }
 
@@ -55,10 +39,6 @@ int hor(t_player *p)
 	double x;
 
 	hor_ray_set(p);
-/* 	y = floor(p->unit.posx) + p->ray.w;
-	x = p->unit.posx + (y - p->unit.posy) * (p->ray.x / p->ray.y);
-	printf("%f %f\n",x,y);
-	while (floor(x) > 0 && floor(x) < p->map.width[(int)y]) */
 	while (p->hor.foundWallHit == FALSE)
 	{
 		if (hasWallAt(p, p->hor.nexttouchX, p->hor.nexttouchY))
@@ -98,16 +78,6 @@ int ver(t_player *p)
 			p->ver.nexttouchY += p->ver.y_step;
 		}
 	}
-
-/* 	x = floor(p->unit.posx) + p->ray.v;
-	y = p->unit.posy + (x - p->unit.posx) * (p->ray.diry / p->ray.dirx);
-	while (floor(y) > 0 && floor(y) < p->map.height)
-	{
-		if (p->map.map[(int)floor(y)][(int)(x - 1 + p->ray.v) == '1'])
-		{
-			p->
-		}
-	} */
 }
 
 int dis(t_player *p)

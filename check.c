@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/16 19:26:09 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 16:00:23 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,60 @@ int check_cub(t_player *p)
     return (0);
 }
 
+int verify_space(t_player *p, int i, int k)
+{
+    int top;
+    int left;
+
+    top = 0;
+    left = 0;
+    if (i == 0)
+        top = 1;
+    else if (p->map.map[i - 1][k] == ' ' || p->map.map[i - 1][k] == '1')
+        top = 1;
+    if (k == 0)
+        left = 1;
+    else if (p->map.map[i][k - 1] == ' ' || p->map.map[i][k - 1] == '1')
+        left = 1;
+    if (top && left)
+        return (1);
+    else
+        return (-1);
+}
+
+int verify_else(t_player *p, int i, int k)
+{
+    if (i == 0 || p->map.map[i - 1][k] == ' ')
+        return (-1);
+    else if (k == 0 || p->map.map[i][k - 1] == ' ')
+        return (-1);
+    else if (p->map.map[i][k + 1] == ' ' || p->map.map[i][k + 1] == '\0')
+        return (-1);
+    else if (i == p->map.height - 1)
+        return (-1);
+}
+
 int mapcheck(t_player *p, int i, int len)
 {
-    char *ptr;
     int k;
+    int ret;
 
-    ptr = p->map.map[i];
     k = 0;
-    while (isWhitespace(ptr[k]))
+    ret = 0;
+    while (isWhitespace(p->map.map[i][k]))
         k++;
-    if (i == 0 || i == p->map.height - 1)
+    while (p->map.map[i][k] && ret != -1)
     {
-        while (ptr[k])
-        {
-            if (ptr[k] == '1' || ptr[k] == ' ')
-                k++;
-            else
-                return (error(MAP_OPEN_ERROR));
-        }
+        if (p->map.map[i][k] == ' ')
+            ret = verify_space(p, i, k);
+        else if (p->map.map[i][k] == '1')
+            ret = 1;
+        else
+            ret = verify_else(p, i, k);
+        k++;
     }
-    else
-    {
-        if (ptr[k] != '1' || ptr[k + len - 1] != '1')
-            return (error(MAP_OPEN_ERROR));
-    }
+    if (ret == -1)
+        return (error(MAP_OPEN_ERROR));
     return (0);
 }
 

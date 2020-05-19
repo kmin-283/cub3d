@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/16 23:04:58 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/19 15:50:33 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,6 @@ int	moveBackandForth(int key, t_player *p)
 	p->unit.posy += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
 	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
 		p->unit.posy -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
- /* 	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-	{
-		p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] = '0';//아이템 먹음//
-		p->map.spr_num--;
-		ft_slist(p);
-	} */
 }
 
 int	moveLeftandRight(int key, t_player *p)
@@ -88,9 +82,9 @@ int	moveLeftandRight(int key, t_player *p)
 	int newUnitY;
 
 	if (key == KEY_LEFT)
-		p->unit.walkDirection = 1;
-	else if (key == KEY_RIGHT)
 		p->unit.walkDirection = -1;
+	else if (key == KEY_RIGHT)
+		p->unit.walkDirection = 1;
 /* 	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
     newUnitX = p->unit.posx + sin(p->unit.rotationAngle) * moveStep;
 	newUnitY = p->unit.posy - cos(p->unit.rotationAngle) * moveStep;
@@ -99,17 +93,10 @@ int	moveLeftandRight(int key, t_player *p)
 		p->unit.posx = newUnitX;
 		p->unit.posy = newUnitY;
 	} */
-
 	p->unit.posx -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
 	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
 		p->unit.posx += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
 	p->unit.posy += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
 	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
 		p->unit.posy -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-/*  	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-	{
-		p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] = '0';
-		p->map.spr_num--;
-		ft_slist(p);
-	} */
 }
