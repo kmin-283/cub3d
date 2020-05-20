@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 14:17:01 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/16 19:34:00 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:07:22 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int    oneLine_len(t_player *p, char *line, int r, int *err)
         else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
         {
             p->unit.pos += 1;
-            p->unit.posx = i + 0.5;
-            p->unit.posy = r + 0.5;
-            *err = setPosition(p, line[i]);
+            *err = setPosition(p, line[i], i, r);
             count++;
         }
+        else
+            p->map.wrong_char += 1;
         i++;
     }
     return (count);

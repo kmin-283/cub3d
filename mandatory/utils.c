@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 11:07:56 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:05:25 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ int isWhitespace(char c)
     c == '\v' || c == 'f' || c == 'r');
 }
 
-int setPosition(t_player *p, char c)
+int setPosition(t_player *p, char c, int i, int r)
 {
+    p->unit.posx = i + 0.5;
+    p->unit.posy = r + 0.5;
     if (c == 'N')
     {
         p->unit.diry = -1;

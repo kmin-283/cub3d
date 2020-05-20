@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 20:23:02 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 11:10:54 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:10:23 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_close(t_player *p)
 			free(p->map.map[i]);
 		free(p->map.map);
 	}
-	free_tex(p);
+	free_tex(p, 1);
 	free(p->map.width);
 	free(p->sprite);
 	exit(0);

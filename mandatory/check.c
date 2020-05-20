@@ -6,11 +6,26 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 11:06:35 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:08:45 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int empty_file(t_player *p)
+{
+    if (p->unit.posx == 0 && p->unit.posy == 0 && p->scr.height == 0 &&
+        p->scr.width == 0 && p->tex.no == NULL && p->tex.so == NULL &&
+        p->tex.we == NULL && p->tex.ea == NULL && p->tex.sp == NULL &&
+        p->tex.c == 0 && p->tex.f == 0 && p->map.height == 0)
+        return (error(FILE_EMPTY));
+    if (p->tex.no == NULL || p->tex.so == NULL || p->tex.we == NULL ||
+    p->tex.ea == NULL || p->tex.sp == NULL || p->tex.c == 0 || p->tex.f == 0)
+        return (error(TEXTURE_ERROR));
+    if (p->map.wrong_char)
+        return (error(CHAR_IN_MAP_ERROR));
+    return (0);
+}
 
 int check_and_set(t_player *p)
 {
@@ -24,20 +39,6 @@ int check_and_set(t_player *p)
     if (ret == 0)
         ret = sprite_list(p);
     return (ret);
-}
-
-int empty_file(t_player *p)
-{
-    if (p->unit.posx == 0 && p->unit.posy == 0 && p->scr.height == 0 &&
-        p->scr.width == 0 && p->tex.no == NULL && p->tex.so == NULL &&
-        p->tex.we == NULL && p->tex.ea == NULL && p->tex.sp == NULL &&
-        p->tex.c == 0 && p->tex.f == 0 && p->map.height == 0)
-        return (error(FILE_EMPTY));
-    if (p->tex.no == NULL || p->tex.so == NULL || p->tex.we == NULL ||
-    p->tex.ea == NULL || p->tex.sp == NULL || p->tex.c == 0 || p->tex.f == 0)
-        return (error(TEXTURE_ERROR));
-    else
-        return (0);
 }
 
 int nameCheck(char *name, char *check)

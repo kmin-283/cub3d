@@ -4,27 +4,26 @@ CC = gcc
 
 CFLAG = -fsanitize=address
 
-INCLUDES =	cub3d.h
+INCLUDES =	./mandatory/cub3d.h
 
 OPTION = -L ./mlx -I . -I ./mlx -lmlx_Linux -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(INCLUDES)
 
-
-SRCS =	main.c\
-		keys.c\
-		check.c\
-		mapcheck.c\
-		map.c\
-		error.c\
-		utils.c\
-		mapgrid.c\
-		unit_and_sprite.c\
-		draw.c\
-		cub3d.c\
-		ray.c\
-		ray2.c\
-		move.c\
-		bitmap.c\
-		sprite.c
+SRCS =	./mandatory/main.c\
+		./mandatory/keys.c\
+		./mandatory/check.c\
+		./mandatory/mapcheck.c\
+		./mandatory/map.c\
+		./mandatory/error.c\
+		./mandatory/utils.c\
+		./mandatory/mapgrid.c\
+		./mandatory/unit_and_sprite.c\
+		./mandatory/draw.c\
+		./mandatory/cub3d.c\
+		./mandatory/ray.c\
+		./mandatory/ray2.c\
+		./mandatory/move.c\
+		./mandatory/bitmap.c\
+		./mandatory/sprite.c
 
 OBJS =	$(SRCS:%.c=%.o)
 
@@ -33,6 +32,8 @@ all:	$(NAME)
 $(NAME) : $(OBJS)
 		make -C ./gnl
 		$(CC) $(CFLAG) -o ${NAME} $(OBJS) $(OPTION)
+
+bonus:
 
 clean:
 		make clean -C ./gnl

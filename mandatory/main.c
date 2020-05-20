@@ -6,13 +6,13 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 11:06:04 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:10:33 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int free_tex(t_player *p)
+int free_tex(t_player *p, int val)
 {
 	if (p->tex.n_img)
 		mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
@@ -24,8 +24,8 @@ int free_tex(t_player *p)
 		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
 	if (p->tex.sp_img)
 		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
-	mlx_clear_window(p->mlx_ptr, p->win_ptr);
-	mlx_destroy_window(p->mlx_ptr, p->win_ptr);
+	if (val == 1)
+		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
 	free(p->mlx_ptr);
 }
 
@@ -42,7 +42,7 @@ int	free_img(t_player *p)
 		}
 		free(p->map.map);
 	}
-	free_tex(p);
+	free_tex(p, 0);
 	if (p->map.width)
 		free(p->map.width);
 	free(p->sprite);

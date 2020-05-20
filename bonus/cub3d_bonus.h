@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 11:11:30 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 19:39:38 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
-#include <stdio.h>
-#include "./libft/libft.h"
-#include "./gnl/get_next_line.h"
+#include "../libft/libft.h"
+#include "../gnl/get_next_line.h"
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -148,6 +147,7 @@ typedef struct  s_map
     int *width;
     int max_width;
     int height;
+    int wrong_char;
 }               t_map;
 
 typedef struct  s_texture
@@ -235,7 +235,7 @@ int unit_move(t_player *p);
 **  main.c
 */
 int init(char *argv1, int hasSavefile);
-int free_tex(t_player *p);
+int free_tex(t_player *p, int val);
 int	free_img(t_player *p);
 /*
 **  draw.c
@@ -300,7 +300,7 @@ int error(int error);
 **  utils.c
 */
 int isWhitespace(char c);
-int setPosition(t_player *p, char c);
+int setPosition(t_player *p, char c, int i, int r);
 int isWall(char c);
 int sprite_cor(t_player *p, int row, int col);
 /*
