@@ -6,7 +6,8 @@ CFLAG = -fsanitize=address
 
 INCLUDES =	cub3d.h
 
-OPTION = -lm -lmlx -lXext -lX11 -no-pie -L ./gnl -lftgnl -I $(INCLUDES)
+OPTION = -L ./mlx -I . -I ./mlx -lmlx_Linux -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(INCLUDES)
+
 
 SRCS =	main.c\
 		keys.c\

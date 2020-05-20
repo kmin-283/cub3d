@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/19 15:50:33 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 11:12:11 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int unit_move(t_player *p)
 	if (p->key.a)
 		moveLeftandRight(KEY_LEFT, p);
 	if (p->key.esc)
-		ft_close(1, p);
+		ft_close(p);
 	if (p->key.left)
 		rotate(LEFT_ARROW, p);
 	if (p->key.right)

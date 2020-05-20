@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/19 19:12:02 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 11:11:30 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@
 #include <sys/stat.h>
 #include "mlx.h"
 
-#define TILE_SIZE 32//TILE_SIZE는 해상도에 맞춰서 바뀔 수 있도록 수정하기!!!!!//
-
 #define TRUE 1
 #define FALSE 0
-#define KEYPRESSMASK 1
-#define KEYRELEASEMASK 10
-#define KEYCLOSEMASK 4
+#define KEYPRESSMASK (1L << 0)
+#define KEYRELEASEMASK (1L << 1)
+#define KEYCLOSEMASK (1L << 17)
 #define KEYPRESS 2
 #define KEYRELEASE 3
 #define KEYCLOSE 17
@@ -42,9 +40,7 @@
 # define KEY_ESC 65307
 # define LEFT_ARROW 65361
 # define RIGHT_ARROW 65363
-#define MINIMAP_SCALE_FACTOR 0.2
-
-#define FOV_ANGLE (66 * (M_PI / 180))
+# define FOV_ANGLE (66 * (M_PI / 180))
 
 /*
 **  ERROR
@@ -118,8 +114,6 @@ typedef struct  s_ray
     double angle;
     double dirx;
     double diry;
-    double v;
-    double w;
     int FacingDown;
 	int FacingUp;
 	int FacingLeft;
@@ -133,8 +127,6 @@ typedef struct  s_unit
     double diry;
     double posx;
     double posy;
-    int x;
-    int y;
     int radius;
     int turnDirection;
     int walkDirection;
@@ -230,7 +222,7 @@ typedef struct  s_player
 */
 int key_press(int key, t_player *p);
 int key_release(int key, t_player *p);
-int	ft_close(int key, t_player *p);
+int	ft_close(t_player *p);
 int key_release_exc(int key, t_player *p);
 /*
 **  move.c

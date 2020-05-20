@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/19 19:10:45 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 11:06:35 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int check_and_set(t_player *p)
 
 int empty_file(t_player *p)
 {
-    if (p->unit.x == 0 && p->unit.y == 0 && p->scr.height == 0 &&
+    if (p->unit.posx == 0 && p->unit.posy == 0 && p->scr.height == 0 &&
         p->scr.width == 0 && p->tex.no == NULL && p->tex.so == NULL &&
         p->tex.we == NULL && p->tex.ea == NULL && p->tex.sp == NULL &&
         p->tex.c == 0 && p->tex.f == 0 && p->map.height == 0)

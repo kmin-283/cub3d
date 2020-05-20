@@ -6,27 +6,24 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 20:23:02 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/17 00:19:56 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 11:10:54 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_close(int key, t_player *p)
+int	ft_close(t_player *p)
 {
 	int i;
 
 	i = p->map.height;
-	while (i--)
-		free(p->map.map[i]);
-	free(p->map.map);
-	mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.s_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.w_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
-	mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
-	mlx_destroy_window(p->mlx_ptr, p->win_ptr);
-	free(p->mlx_ptr);
+	if (p->map.map)
+	{
+		while (i-- > 0)
+			free(p->map.map[i]);
+		free(p->map.map);
+	}
+	free_tex(p);
 	free(p->map.width);
 	free(p->sprite);
 	exit(0);

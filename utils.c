@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/17 00:20:11 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 11:07:56 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int setPosition(t_player *p, char c)
         p->unit.dirx = -1;
         p->unit.rotationAngle = M_PI;
     }
-    p->unit.y = p->map.height;
     if (p->unit.pos != 1)
         return (-1);
     return (0);

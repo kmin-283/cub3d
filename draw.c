@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/18 22:25:20 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 00:08:42 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,7 @@ int draw(t_player *p, int has_save_file)
 	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
 	free(p->spr.wallhit);
 	mlx_destroy_image(p->mlx_ptr, p->img1);
+	p->img1 = NULL;
+	p->img_addr = NULL;
 	return (0);
 }
