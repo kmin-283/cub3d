@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:40:22 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 20:12:44 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ int parsing_cubfile(t_player *p, char *line)
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		ret = mapTexture(p, line, &p->tex.sp, &p->tex.sp_img);
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		ret = mapColor(p, line, &p->tex.f);
+		ret = mapTexture(p, line, &p->tex.f, &p->tex.f_img);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		ret = mapColor(p, line, &p->tex.c);
+		ret = mapTexture(p, line, &p->tex.c, &p->tex.c_img);
     else if (line[i] == '1' && line[i + 1] != '\0')
 		ret = mapGrid(p, line);
     return (ret);

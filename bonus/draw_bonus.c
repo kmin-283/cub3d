@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:40:14 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 22:49:55 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 unsigned int fillTexture(t_player * p, double scale, double t_start)
 {
-	int color;
+	unsigned int color;
 	int index;
 	int start;
 
@@ -36,6 +36,29 @@ unsigned int fillTexture(t_player * p, double scale, double t_start)
 	return (color);
 }
 
+unsigned int floor_ceiling(t_player *p, int val)
+{
+	int index;
+	unsigned int color;
+	if (p->tex.fy_cor > 64 || p->tex.cy_cor > 64)
+	{
+		p->tex.fy_cor = 0;
+		p->tex.cy_cor = 0;
+	}
+	if (val == 1)
+	{
+		/* index = (p->dis.final_wallHitX - floor(p->dis.final_wallHitX)) * 64 + floor(p->tex.cy_cor) * 64;
+		color = p->tex.c[index]; */
+	}
+	else
+	{
+		index = fmod(p->dis.final_wallHitX, 64) + floor(p->tex.fy_cor) * 64;
+		color = p->tex.f[index];
+	}
+	p->tex.fy_cor += 0.3;
+	return (color);
+}
+
 int render_3d_ProjectionWall(t_player *p)
 {
 	int i;
@@ -54,15 +77,16 @@ int render_3d_ProjectionWall(t_player *p)
 	while (i <= p->scr.height)
 	{
 		if (i < p->ray.start)
-			color = p->tex.c;
+			color = 0xFFFFFF;
 		else if (i > p->ray.start + p->ray.wall_strip_height)
-			color = p->tex.f;
+			color = floor_ceiling(p, 0);
 		else
 			color = fillTexture(p, 64 / p->ray.wall_strip_height, texture_start);
 		p->img_addr[p->ray.id + i * p->scr.width] = color;
 		i++;
 	}
 	p->tex.y_cor = 0;
+	p->tex.fy_cor = 0;
 }
 
 int reset_variables(t_player *p)

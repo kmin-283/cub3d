@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:40:20 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 21:42:55 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int free_tex(t_player *p, int val)
 		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
 	if (p->tex.sp_img)
 		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
+	if (p->tex.f_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.f_img);
+	if (p->tex.c_img)
+		mlx_destroy_image(p->mlx_ptr, p->tex.c_img);
 	if (val == 1)
 		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
 	free(p->mlx_ptr);

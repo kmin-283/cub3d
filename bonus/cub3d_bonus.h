@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:39:38 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/20 21:47:47 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,15 +157,19 @@ typedef struct  s_texture
     void *w_img;
     void *e_img;
     void *sp_img;
+    void *c_img;
+    void *f_img;
     unsigned int *no;
     unsigned int *so;
     unsigned int *we;
     unsigned int *ea;
     unsigned int *sp;
-    unsigned int c;
-    unsigned int f;
+    unsigned int *c;
+    unsigned int *f;
     double y_cor;
     double x_cor;
+    double cy_cor;
+    double fy_cor;
 }               t_tex;
 
 typedef struct  s_sprite
