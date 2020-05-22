@@ -6,13 +6,14 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 21:47:47 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/22 17:56:22 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
+#include <stdio.h>
 #include "../libft/libft.h"
 #include "../gnl/get_next_line.h"
 #include <math.h>
@@ -168,8 +169,8 @@ typedef struct  s_texture
     unsigned int *f;
     double y_cor;
     double x_cor;
-    double cy_cor;
-    double fy_cor;
+    double sky_xcor;
+    double sky_ycor;
 }               t_tex;
 
 typedef struct  s_sprite
@@ -327,4 +328,8 @@ int sprite_order(t_player *p);
 int sprite_locate(t_player *p, int i, double angle);
 int sprite_draw(t_player *p, double xloc, double dist, int k);
 unsigned int fill_sp_tex(t_player *p, double x, double scale);
+/*
+**  sky_bonus.c
+*/
+unsigned int sky(t_player *p);
 #endif

@@ -10,9 +10,9 @@ INCLUDES =	./mandatory/cub3d.h
 
 B_INCLUDES = ./bonus/cub3d_bonus.h
 
-OPTION = -L ./mlx -I . -I ./mlx -lmlx_Linux -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(INCLUDES)
+OPTION = -L ./mlx -I . -I ./mlx -lmlx_x86_64 -lmlx -lXext -lm -lX11 -lbsd -L ./gnl -lftgnl -I $(INCLUDES)
 
-B_OPTION = -L ./mlx -I . -I ./mlx -lmlx_Linux -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(B_INCLUDES)
+B_OPTION = -L ./mlx -I . -I ./mlx -lmlx_x86_64 -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(B_INCLUDES)
 
 SRCS =	./mandatory/main.c\
 		./mandatory/keys.c\
@@ -46,7 +46,8 @@ B_SRCS = ./bonus/main_bonus.c\
 		./bonus/ray2_bonus.c\
 		./bonus/move_bonus.c\
 		./bonus/bitmap_bonus.c\
-		./bonus/sprite_bonus.c
+		./bonus/sprite_bonus.c\
+		./bonus/sky_bonus.c
 
 OBJS =	$(SRCS:%.c=%.o)
 

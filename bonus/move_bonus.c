@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:40:29 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/22 19:14:41 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,11 @@ int	moveBackandForth(int key, t_player *p)
 		p->unit.walkDirection = 1;
 	else if (key == KEY_DOWN)
 		p->unit.walkDirection = -1;
-/* 	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
-    newUnitX = p->unit.posx + cos(p->unit.rotationAngle) * moveStep;
-	newUnitY = p->unit.posy + sin(p->unit.rotationAngle) * moveStep;
-    if (!hasWallAt(p, newUnitX, newUnitY))
-    {
-		p->unit.posx = newUnitX;
-		p->unit.posy = newUnitY;
-	} */
-
 	p->unit.posx += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
 		p->unit.posx -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
 	p->unit.posy += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
 		p->unit.posy -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
 }
 
@@ -85,18 +76,10 @@ int	moveLeftandRight(int key, t_player *p)
 		p->unit.walkDirection = -1;
 	else if (key == KEY_RIGHT)
 		p->unit.walkDirection = 1;
-/* 	moveStep = p->unit.walkDirection * p->unit.moveSpeed;
-    newUnitX = p->unit.posx + sin(p->unit.rotationAngle) * moveStep;
-	newUnitY = p->unit.posy - cos(p->unit.rotationAngle) * moveStep;
-    if (!hasWallAt(p, newUnitX, newUnitY))
-    {
-		p->unit.posx = newUnitX;
-		p->unit.posy = newUnitY;
-	} */
 	p->unit.posx -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
 		p->unit.posx += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
 	p->unit.posy += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1')
+	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
 		p->unit.posy -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
 }

@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 22:49:55 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/22 20:12:45 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ unsigned int fillTexture(t_player * p, double scale, double t_start)
 	{
 		index = (p->dis.final_wallHitY - floor(p->dis.final_wallHitY)) * 64 + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.FacingRight ? p->tex.ea[index] : p->tex.we[index];
-		color = (color >> 1) & 8355711;
 	}
 	else
 	{
@@ -33,29 +32,6 @@ unsigned int fillTexture(t_player * p, double scale, double t_start)
 		color = p->ray.FacingDown ? p->tex.so[index] : p->tex.no[index];
 	}
 	p->tex.y_cor += scale;
-	return (color);
-}
-
-unsigned int floor_ceiling(t_player *p, int val)
-{
-	int index;
-	unsigned int color;
-	if (p->tex.fy_cor > 64 || p->tex.cy_cor > 64)
-	{
-		p->tex.fy_cor = 0;
-		p->tex.cy_cor = 0;
-	}
-	if (val == 1)
-	{
-		/* index = (p->dis.final_wallHitX - floor(p->dis.final_wallHitX)) * 64 + floor(p->tex.cy_cor) * 64;
-		color = p->tex.c[index]; */
-	}
-	else
-	{
-		index = fmod(p->dis.final_wallHitX, 64) + floor(p->tex.fy_cor) * 64;
-		color = p->tex.f[index];
-	}
-	p->tex.fy_cor += 0.3;
 	return (color);
 }
 
@@ -77,20 +53,25 @@ int render_3d_ProjectionWall(t_player *p)
 	while (i <= p->scr.height)
 	{
 		if (i < p->ray.start)
-			color = 0xFFFFFF;
-		else if (i > p->ray.start + p->ray.wall_strip_height)
-			color = floor_ceiling(p, 0);
-		else
+			color = sky(p);
+		else if (i > p->ray.start && i < p->ray.start + p->ray.wall_strip_height)
 			color = fillTexture(p, 64 / p->ray.wall_strip_height, texture_start);
+		else
+			color = 0xFFFFFF;
 		p->img_addr[p->ray.id + i * p->scr.width] = color;
 		i++;
 	}
 	p->tex.y_cor = 0;
-	p->tex.fy_cor = 0;
+	p->tex.sky_ycor = 0;
+	return (0);
 }
 
 int reset_variables(t_player *p)
 {
+	if (p->tex.sky_xcor > 1024)
+        p->tex.sky_xcor = 0;
+	else
+        p->tex.sky_xcor += (double)1024 / p->scr.width;
 	p->hor.foundWallHit = FALSE;
 	p->ver.foundWallHit = FALSE;
 }
@@ -118,6 +99,7 @@ int render(t_player *p)
 		p->ray.id++;
 	}
 	sprite(p);
+	p->tex.sky_xcor = 0;
 	p->ray.id = 0;
 	return (0);
 }
