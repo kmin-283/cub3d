@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 23:14:30 by kmin              #+#    #+#             */
-/*   Updated: 2020/04/13 17:27:24 by kmin             ###   ########.fr       */
+/*   Updated: 2020/04/16 19:51:29 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
-char				*ft_itoa_u(unsigned int n);
-char				*ft_lltoa(long long n);
-char				*ft_lltoa_u(unsigned long long n);
-char				*ft_itoa_hexa(int n);
-char				*ft_itoa_hexa_upper(int n);
-char				*ft_lltoa_hexa(long long n);
-char				*ft_lltoa_hexa_upper(long long n);
-char				*ft_ltoa_hexa(long long n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);

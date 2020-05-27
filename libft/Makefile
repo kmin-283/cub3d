@@ -1,5 +1,7 @@
 NAME 	=	libft.a
 
+OPTION 	=	-I ${HEADER}
+
 SRCS 	=	ft_atoi.c\
 			ft_bzero.c\
 			ft_calloc.c\
@@ -9,14 +11,6 @@ SRCS 	=	ft_atoi.c\
 			ft_isdigit.c\
 			ft_isprint.c\
 			ft_itoa.c\
-			ft_itoa_u.c\
-			ft_lltoa.c\
-			ft_lltoa_u.c\
-			ft_itoa_hexa.c\
-			ft_itoa_hexa_upper.c\
-			ft_lltoa_hexa.c\
-			ft_lltoa_hexa_upper.c\
-			ft_ltoa_hexa.c\
 			ft_memccpy.c\
 			ft_memchr.c\
 			ft_memcmp.c\
@@ -25,6 +19,7 @@ SRCS 	=	ft_atoi.c\
 			ft_memset.c\
 			ft_putchar_fd.c\
 			ft_putendl_fd.c\
+			ft_putnbr_fd.c\
 			ft_putstr_fd.c\
 			ft_split.c\
 			ft_strchr.c\
@@ -40,7 +35,7 @@ SRCS 	=	ft_atoi.c\
 			ft_strtrim.c\
 			ft_substr.c\
 			ft_tolower.c\
-			ft_toupper.c\
+			ft_toupper.c
 
 B_SRCS	= 	ft_lstadd_back.c\
 			ft_lstadd_front.c\

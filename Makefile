@@ -10,9 +10,9 @@ INCLUDES =	./mandatory/cub3d.h
 
 B_INCLUDES = ./bonus/cub3d_bonus.h
 
-OPTION = -L ./mlx -I . -I ./mlx -lmlx_x86_64 -lmlx -lXext -lm -lX11 -lbsd -L ./gnl -lftgnl -I $(INCLUDES)
+OPTION = -L ./mlxopengl -lmlx -framework OpenGL -framework AppKit -lm -L ./gnl -lftgnl -I $(INCLUDES)
 
-B_OPTION = -L ./mlx -I . -I ./mlx -lmlx_x86_64 -lmlx -lXext -lm -lX11 -lbsd -no-pie -L ./gnl -lftgnl -I $(B_INCLUDES)
+B_OPTION = -L ./mlxopengl -lmlx -framework OpenGL -framework AppKit -lm -L ./gnl -lftgnl -I $(B_INCLUDES)
 
 SRCS =	./mandatory/main.c\
 		./mandatory/keys.c\
@@ -72,6 +72,6 @@ clean:
 
 fclean:	clean
 		make fclean -C ./gnl
-		rm -f $(NAME)
+		rm -f $(NAME) $(B_NAME)
 
 re:		fclean all

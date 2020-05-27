@@ -1,85 +1,126 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_bonus.c                                       :+:      :+:    :+:   */
+/*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:05 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/22 19:14:41 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/24 14:07:34 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-int unit_move(t_player *p)
+int	unit_move(t_player *p)
 {
 	if (p->key.w)
-		moveBackandForth(KEY_UP, p);
+		movebackandforth(KEY_UP, p);
 	if (p->key.s)
-        moveBackandForth(KEY_DOWN, p);
+		movebackandforth(KEY_DOWN, p);
 	if (p->key.d)
-		moveLeftandRight(KEY_RIGHT, p);
+		moveleftandright(KEY_RIGHT, p);
 	if (p->key.a)
-		moveLeftandRight(KEY_LEFT, p);
+		moveleftandright(KEY_LEFT, p);
 	if (p->key.esc)
 		ft_close(p);
 	if (p->key.left)
 		rotate(LEFT_ARROW, p);
 	if (p->key.right)
 		rotate(RIGHT_ARROW, p);
-    draw(p, FALSE);
+	draw(p, FALSE);
 	return (0);
 }
 
-int rotate(int key, t_player *p)
+int	rotate(int key, t_player *p)
 {
 	double dist;
 
 	if (key == RIGHT_ARROW)
-		p->unit.turnDirection = 1;
+		p->unit.turndirection = 1;
 	else if (key == LEFT_ARROW)
-		p->unit.turnDirection = -1;
-	p->unit.dirx = p->unit.dirx * cos(p->unit.turnDirection * p->unit.rotationSpeed) - p->unit.diry * sin(p->unit.turnDirection * p->unit.rotationSpeed);
-	p->unit.diry = p->unit.diry * cos(p->unit.turnDirection * p->unit.rotationSpeed) + p->unit.dirx * sin(p->unit.turnDirection * p->unit.rotationSpeed);
+		p->unit.turndirection = -1;
+	p->unit.dirx = p->unit.dirx * cos(p->unit.turndirection *
+			p->unit.rotationspeed) - p->unit.diry *
+		sin(p->unit.turndirection * p->unit.rotationspeed);
+	p->unit.diry = p->unit.diry * cos(p->unit.turndirection *
+			p->unit.rotationspeed) + p->unit.dirx *
+		sin(p->unit.turndirection * p->unit.rotationspeed);
 	dist = hypot(p->unit.dirx, p->unit.diry);
 	p->unit.dirx /= dist;
 	p->unit.diry /= dist;
-	p->unit.rotationAngle += p->unit.turnDirection * p->unit.rotationSpeed;
+	p->unit.angle += p->unit.turndirection * p->unit.rotationspeed;
+	return (0);
 }
 
-int	moveBackandForth(int key, t_player *p)
+int	movebackandforth(int key, t_player *p)
 {
-	double moveStep;
-	int newUnitX;
-	int newUnitY;
-
 	if (key == KEY_UP)
-		p->unit.walkDirection = 1;
+		p->unit.walkdirection = 1;
 	else if (key == KEY_DOWN)
-		p->unit.walkDirection = -1;
-	p->unit.posx += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-		p->unit.posx -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-	p->unit.posy += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-		p->unit.posy -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
+		p->unit.walkdirection = -1;
+	p->unit.posx += p->unit.walkdirection *
+		(p->unit.dirx * p->unit.movespeed / 100);
+	if (p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '1'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '2'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '3'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '4')
+		p->unit.posx -= p->unit.walkdirection *
+			(p->unit.dirx * p->unit.movespeed / 100);
+	p->unit.posy += p->unit.walkdirection *
+		(p->unit.diry * p->unit.movespeed / 100);
+	if (p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '1'
+			|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '2'
+			|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '3'
+			|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '4')
+		p->unit.posy -= p->unit.walkdirection *
+			(p->unit.diry * p->unit.movespeed / 100);
+	return (0);
 }
 
-int	moveLeftandRight(int key, t_player *p)
+int	mouse(int x, int y, t_player *p)
 {
-	double moveStep;
-	int newUnitX;
-	int newUnitY;
+	double dist;
 
+	if (x > p->unit.mouse_x)
+		p->unit.turndirection = 1;
+	else if (x < p->unit.mouse_x)
+		p->unit.turndirection = -1;
+	p->unit.mouse_x = x;
+	p->unit.dirx = p->unit.dirx * cos(p->unit.turndirection *
+			p->unit.rotationspeed) - p->unit.diry *
+		sin(p->unit.turndirection * p->unit.rotationspeed);
+	p->unit.diry = p->unit.diry * cos(p->unit.turndirection *
+			p->unit.rotationspeed) + p->unit.dirx *
+		sin(p->unit.turndirection * p->unit.rotationspeed);
+	dist = hypot(p->unit.dirx, p->unit.diry);
+	p->unit.dirx /= dist;
+	p->unit.diry /= dist;
+	p->unit.angle += p->unit.turndirection * p->unit.rotationspeed;
+	return (0);
+}
+
+int	moveleftandright(int key, t_player *p)
+{
 	if (key == KEY_LEFT)
-		p->unit.walkDirection = -1;
+		p->unit.walkdirection = -1;
 	else if (key == KEY_RIGHT)
-		p->unit.walkDirection = 1;
-	p->unit.posx -= p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-		p->unit.posx += p->unit.walkDirection * (p->unit.diry * p->unit.moveSpeed / 100);
-	p->unit.posy += p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
-	if (p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '1' || p->map.map[(int)floor(p->unit.posy)][(int)floor(p->unit.posx)] == '2')
-		p->unit.posy -= p->unit.walkDirection * (p->unit.dirx * p->unit.moveSpeed / 100);
+		p->unit.walkdirection = 1;
+	p->unit.posx -= p->unit.walkdirection *
+		(p->unit.diry * p->unit.movespeed / 100);
+	if (p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '1'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '2'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '3'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '4')
+		p->unit.posx += p->unit.walkdirection *
+			(p->unit.diry * p->unit.movespeed / 100);
+	p->unit.posy += p->unit.walkdirection *
+		(p->unit.dirx * p->unit.movespeed / 100);
+	if (p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '1'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '2'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '3'
+		|| p->map.map[(int)p->unit.posy][(int)p->unit.posx] == '4')
+		p->unit.posy -= p->unit.walkdirection *
+			(p->unit.dirx * p->unit.movespeed / 100);
+	return (0);
 }

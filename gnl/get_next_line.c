@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 12:09:43 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/05 18:12:48 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/22 21:33:53 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,44 @@
 
 char	*ft_tr_strchr(const char *s, int c)
 {
-        int             i;
+	int i;
 
-        i = 0;
-		if (!s)
-			return (NULL);
-        while (s[i])
-        {
-                if (s[i] == (char)c)
-                        return ((char *)s + i);
-                i++;
-        }
-        if ((char)c == '\0')
-                return ((char *)s + i);
-        return (NULL);
+	i = 0;
+	if (!s)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s + i);
+	return (NULL);
 }
 
 void	*ft_memmove_gnl(void *dst, const void *src, size_t len)
 {
-        unsigned char   *s_ptr;
-        unsigned char   *d_ptr;
-        size_t                  i;
+	unsigned char	*s_ptr;
+	unsigned char	*d_ptr;
+	size_t			i;
 
-        s_ptr = (void *)src;
-        d_ptr = dst;
-        i = 0;
-        if (s_ptr >= d_ptr)
-        {
-                while (i++ < len)
-                        *d_ptr++ = *s_ptr++;
-        }
-        else
-        {
-                s_ptr += len;
-                d_ptr += len;
-                while (i++ < len)
-                        *--d_ptr = *--s_ptr;
-        }
-        return (dst);
+	s_ptr = (void *)src;
+	d_ptr = dst;
+	i = 0;
+	if (s_ptr >= d_ptr)
+	{
+		while (i++ < len)
+			*d_ptr++ = *s_ptr++;
+	}
+	else
+	{
+		s_ptr += len;
+		d_ptr += len;
+		while (i++ < len)
+			*--d_ptr = *--s_ptr;
+	}
+	return (dst);
 }
 
 char	*ft_line_content(char *newline, char **line, char **ptr_fd)
@@ -60,7 +60,7 @@ char	*ft_line_content(char *newline, char **line, char **ptr_fd)
 	size_t	i;
 	size_t	len;
 
-	if(*ptr_fd)
+	if (*ptr_fd)
 		tmp = ft_tr_strdup(*ptr_fd, newline);
 	else
 		tmp = ft_tr_strdup("", newline);
@@ -75,7 +75,7 @@ char	*ft_line_content(char *newline, char **line, char **ptr_fd)
 	return (*line);
 }
 
-int		ft_get_res(int check,  char **line, char **ptr_fd)
+int		ft_get_res(int check, char **line, char **ptr_fd)
 {
 	int		res;
 	char	*newline;

@@ -6,13 +6,13 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/20 19:10:33 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/22 22:29:40 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int free_tex(t_player *p, int val)
+int	free_tex(t_player *p, int val)
 {
 	if (p->tex.n_img)
 		mlx_destroy_image(p->mlx_ptr, p->tex.n_img);
@@ -27,6 +27,7 @@ int free_tex(t_player *p, int val)
 	if (val == 1)
 		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
 	free(p->mlx_ptr);
+	return (0);
 }
 
 int	free_img(t_player *p)
@@ -50,7 +51,7 @@ int	free_img(t_player *p)
 	return (0);
 }
 
-int init(char *argv1, int hasSavefile)
+int	init(char *argv1, int hassavefile)
 {
 	t_player p;
 
@@ -62,26 +63,26 @@ int init(char *argv1, int hasSavefile)
 		return (0);
 	}
 	p.win_ptr = mlx_new_window(p.mlx_ptr, p.scr.width, p.scr.height, "cub3d");
-	draw(&p, hasSavefile);
- 	mlx_hook(p.win_ptr, KEYPRESS, KEYPRESSMASK, key_press, &p);
+	draw(&p, hassavefile);
+	mlx_hook(p.win_ptr, KEYPRESS, 1L << 0, key_press, &p);
 	mlx_loop_hook(p.mlx_ptr, unit_move, &p);
-	mlx_hook(p.win_ptr, KEYRELEASE, KEYRELEASEMASK, key_release, &p);
-	mlx_hook(p.win_ptr, KEYCLOSE, KEYCLOSEMASK, ft_close, &p);
+	mlx_hook(p.win_ptr, KEYRELEASE, 1L << 1, key_release, &p);
+	mlx_hook(p.win_ptr, KEYCLOSE, 1L << 17, ft_close, &p);
 	mlx_loop(p.mlx_ptr);
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int hasSavefile;
+	int hassavefile;
 
-	hasSavefile = FALSE;
-	if (argc == 2 && nameCheck(argv[1], ".cub"))
-		init(argv[1], hasSavefile);
-	else if (argc == 3 && nameCheck(argv[1], ".cub") && saveCheck(argv[2]))
+	hassavefile = FALSE;
+	if (argc == 2 && namecheck(argv[1], ".cub"))
+		init(argv[1], hassavefile);
+	else if (argc == 3 && namecheck(argv[1], ".cub") && savecheck(argv[2]))
 	{
-		hasSavefile = TRUE;
-		init(argv[1], hasSavefile);
+		hassavefile = TRUE;
+		init(argv[1], hassavefile);
 	}
 	else if (argc < 2)
 		error(LITTLE_ARG_ERROR);
