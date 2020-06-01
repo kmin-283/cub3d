@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/24 13:24:25 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/31 16:10:37 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	screenrange(t_player *p, char *line)
 	while (iswhitespace(*line))
 		line++;
 	if (p->scr.width > 2560)
-		p->scr.width = 25600;
+		p->scr.width = 2560;
 	if (p->scr.height > 1400)
 		p->scr.height = 1400;
 	if (p->scr.width <= 0 || p->scr.height <= 0 || *line != '\0')
@@ -107,7 +107,7 @@ int	parsing_cubfile(t_player *p, char *line)
 		ret = maptexture(p, line, &p->tex.f, &p->tex.f_img);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		ret = maptexture(p, line, &p->tex.c, &p->tex.c_img);
-	else if (line[i] == '1' && line[i + 1] != '\0')
+	else if (line[i] != '\0' && iscomp(line[i + 1]) && iscomp(line[i + 2]))
 		ret = mapgrid(p, line);
 	parsing_sprites(p, line, i, &ret);
 	return (ret);

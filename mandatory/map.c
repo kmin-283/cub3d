@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:58:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/23 22:12:44 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/31 16:06:23 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	screenrange(t_player *p, char *line)
 	while (iswhitespace(*line))
 		line++;
 	if (p->scr.width > 2560)
-		p->scr.width = 25600;
+		p->scr.width = 2560;
 	if (p->scr.height > 1400)
 		p->scr.height = 1400;
 	if (p->scr.width <= 0 || p->scr.height <= 0 || *line != '\0')
@@ -109,7 +109,7 @@ int	parsing_cubfile(t_player *p, char *line)
 		ret = mapcolor(p, line, &p->tex.f);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		ret = mapcolor(p, line, &p->tex.c);
-	else if (line[i] == '1' && line[i + 1] != '\0')
+	else if (line[i] != '\0' && iscomp(line[i + 1]) && iscomp(line[i + 2]))
 		ret = mapgrid(p, line);
 	return (ret);
 }

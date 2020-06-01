@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 18:14:12 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/27 10:06:14 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/31 16:08:50 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,7 @@ int					skip_space(char *str, int *i);
 int					iswhitespace(char c);
 int					setposition(t_player *p, char c, int i, int r);
 int					iswall(char c);
-int					sprite_cor(t_player *p, int row, int col);
+int					iscomp(char c);
 
 /*
 **  unit_and_sprite_bonus.c

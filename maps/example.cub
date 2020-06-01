@@ -1,4 +1,4 @@
-R 1500 720
+R 15000 7200
 
 NO ./textures/grey.xpm
 SO ./textures/hitler.xpm

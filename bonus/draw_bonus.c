@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/24 11:39:31 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/27 21:00:11 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void			render_3d_projectionwall(t_player *p)
 	if (p->ray.start < 0)
 		p->ray.start = 0;
 	texture_start = p->ray.start - p->scr.height / 2 + p->ray.strip_h / 2;
-	while (i <= p->scr.height)
+	while (i < p->scr.height)
 	{
 		if (i < p->ray.start)
 			color = sky(p);
@@ -112,10 +112,13 @@ int				draw(t_player *p, int has_save_file)
 	render(p);
 	if (has_save_file)
 		init_bitmap(p);
-	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
-	free(p->spr.wallhit);
-	mlx_destroy_image(p->mlx_ptr, p->img1);
-	p->img1 = NULL;
-	p->img_addr = NULL;
+	else
+	{
+		mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
+		free(p->spr.wallhit);
+		mlx_destroy_image(p->mlx_ptr, p->img1);
+		p->img1 = NULL;
+		p->img_addr = NULL;
+	}
 	return (0);
 }

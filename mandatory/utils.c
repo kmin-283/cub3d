@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:21:19 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/23 22:03:33 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/31 16:11:19 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,16 @@ int	skip_space(char *str, int *i)
 int	iswall(char c)
 {
 	return (c == ' ' || c == '1');
+}
+
+int	iscomp(char c)
+{
+	int ret;
+
+	if (c == '1' || c == '0' || c == '2' || c == 'W' ||
+			c == 'E' || c == 'S' || c == 'N')
+		ret = 1;
+	else
+		ret = 0;
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 18:43:47 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/27 10:00:40 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/29 14:23:27 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	sprite_start_point(t_player *p, int tex_size, int i)
 	int x;
 	int y;
 
+	if (p->tex.sp == NULL)
+		return (error(TEXTURE_ERROR));
 	x = 0;
 	while (x < tex_size)
 	{

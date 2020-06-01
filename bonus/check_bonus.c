@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:56:16 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/24 14:00:03 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/27 21:01:19 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	empty_file(t_player *p)
 int	check_and_set(t_player *p)
 {
 	int ret;
+	int i;
 
+	i = 0;
 	ret = empty_file(p);
 	if (ret == 0)
 		ret = init_unit(p);
@@ -39,6 +41,14 @@ int	check_and_set(t_player *p)
 		ret = setmapwidth(p);
 	if (ret == 0)
 		sprite_list(p);
+	if (ret == 0)
+	{
+		while (i < p->map.spr_num)
+		{
+			sprite_start_point(p, 64, i);
+			i++;
+		}
+	}
 	return (ret);
 }
 

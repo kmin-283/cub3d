@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 16:50:55 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/27 10:15:47 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/27 20:45:45 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ int	init_bitmap(t_player *p)
 	file_size = 54 + (p->scr.width * p->scr.height) * 4;
 	ret = bmp_header(p, fd, file_size);
 	ret = bmp_data(p, fd);
+	close(fd);
+	ft_close(p);
 	return (ret);
 }

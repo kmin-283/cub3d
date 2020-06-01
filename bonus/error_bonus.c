@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 17:32:23 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/24 11:21:25 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/27 21:10:12 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	error(int error)
 	error == 7 ? write(1, "Error : Texture Invalid\n", 25) : 0;
 	error == 8 ? write(1, "Error : Color Invalid\n", 23) : 0;
 	error == 9 ? write(1, "Error : Map is Open\n", 21) : 0;
-	error == 10 ? write(1, "Error : Invalid character in Map\n", 34) : 0;
+	error == 10 ? write(1, "Error : Invalid Map\n", 21) : 0;
 	error == 11 ? write(1, "Error : Allocation fails in mapGrid\n", 37) : 0;
 	error == 12 ? write(1, "Error : Allocation fails in MapWidth\n", 38) : 0;
 	error == 13 ? write(1, "Error : Bitmap open falis\n", 27) : 0;

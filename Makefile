@@ -4,7 +4,7 @@ B_NAME = cub3D_bonus
 
 CC = gcc
 
-CFLAG = -Wall -Werror -Wextra
+CFLAG = -g3 -fsanitize=address
 
 INCLUDES =	./mandatory/cub3d.h
 

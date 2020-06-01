@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 19:13:57 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/25 13:32:56 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/27 20:58:27 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ unsigned int	filltexture(t_player *p, double scale, double t_start)
 		index = (p->dis.hity - floor(p->dis.hity)) *
 			64 + floor(p->tex.y_cor + t_start) * 64;
 		color = p->ray.facingright ? p->tex.ea[index] : p->tex.we[index];
-		color = (color >> 1) & 8355711;
 	}
 	else
 	{
@@ -53,7 +52,7 @@ void			render_3d_projectionwall(t_player *p)
 	if (p->ray.start < 0)
 		p->ray.start = 0;
 	texture_start = p->ray.start - p->scr.height / 2 + p->ray.strip_h / 2;
-	while (i <= p->scr.height)
+	while (i < p->scr.height)
 	{
 		if (i < p->ray.start)
 			color = p->tex.c;
@@ -105,12 +104,15 @@ int				render(t_player *p)
 int				draw(t_player *p, int has_save_file)
 {
 	render(p);
-	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
 	if (has_save_file)
 		init_bitmap(p);
-	free(p->spr.wallhit);
-	mlx_destroy_image(p->mlx_ptr, p->img1);
-	p->img1 = NULL;
-	p->img_addr = NULL;
+	else
+	{
+		mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->img1, 0, 0);
+		free(p->spr.wallhit);
+		mlx_destroy_image(p->mlx_ptr, p->img1);
+		p->img1 = NULL;
+		p->img_addr = NULL;
+	}
 	return (0);
 }

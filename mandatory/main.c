@@ -6,7 +6,7 @@
 /*   By: kmin <kmin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:25:46 by kmin              #+#    #+#             */
-/*   Updated: 2020/05/22 22:29:40 by kmin             ###   ########.fr       */
+/*   Updated: 2020/05/31 16:05:46 by kmin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	free_tex(t_player *p, int val)
 		mlx_destroy_image(p->mlx_ptr, p->tex.e_img);
 	if (p->tex.sp_img)
 		mlx_destroy_image(p->mlx_ptr, p->tex.sp_img);
-	if (val == 1)
+	if (val == 1 && p->win_ptr)
 		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
 	free(p->mlx_ptr);
 	return (0);
@@ -62,13 +62,18 @@ int	init(char *argv1, int hassavefile)
 		free_img(&p);
 		return (0);
 	}
-	p.win_ptr = mlx_new_window(p.mlx_ptr, p.scr.width, p.scr.height, "cub3d");
+	if (!hassavefile)
+		p.win_ptr = mlx_new_window(p.mlx_ptr, p.scr.width,
+				p.scr.height, "cub3d");
 	draw(&p, hassavefile);
-	mlx_hook(p.win_ptr, KEYPRESS, 1L << 0, key_press, &p);
-	mlx_loop_hook(p.mlx_ptr, unit_move, &p);
-	mlx_hook(p.win_ptr, KEYRELEASE, 1L << 1, key_release, &p);
-	mlx_hook(p.win_ptr, KEYCLOSE, 1L << 17, ft_close, &p);
-	mlx_loop(p.mlx_ptr);
+	if (!hassavefile)
+	{
+		mlx_hook(p.win_ptr, KEYPRESS, 1L << 0, key_press, &p);
+		mlx_loop_hook(p.mlx_ptr, unit_move, &p);
+		mlx_hook(p.win_ptr, KEYRELEASE, 1L << 1, key_release, &p);
+		mlx_hook(p.win_ptr, KEYCLOSE, 1L << 17, ft_close, &p);
+		mlx_loop(p.mlx_ptr);
+	}
 	return (0);
 }
 
